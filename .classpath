@@ -7,5 +7,9 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/lwjgl_util.jar"/>
+	<classpathentry kind="lib" path="lib/lwjgl-platform-2.9.1-natives-linux.jar"/>
+	<classpathentry kind="lib" path="lib/lwjgl-platform-2.9.1-natives-osx.jar"/>
+	<classpathentry kind="lib" path="lib/lwjgl-platform-2.9.1-natives-windows.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

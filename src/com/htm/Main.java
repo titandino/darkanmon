@@ -3,19 +3,39 @@ package com.htm;
 import static org.lwjgl.opengl.GL11.*;
 
 import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
-import org.lwjgl.opengl.PixelFormat;
+import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector2f;
+
+import com.htm.game.Entity;
+import com.htm.graphic.Renderer;
+import com.htm.graphic.shader.Shader;
+import com.htm.graphic.shader.impl.BasicShader;
+import com.htm.utils.Util;
 
 public class Main {
 	
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 600;
 	
+	private static Shader shader;
+	private static Renderer renderer;
+	
+	public static Entity testEntity = new Entity(new Vector2f(200.0f, 200.0f), new Vector2f(70.0f, 150.0f));
+	
 	public static void main(String[] args) {
 		try {
+			long lastTime = System.currentTimeMillis();
+            double delta = 0;
 			initialize();
 			while (!Display.isCloseRequested()) {
+				long curr = System.currentTimeMillis();
+                delta = (curr - lastTime)/1000;
+                lastTime = curr;
+                
+				update(delta);
 				render();
 			}
 			finish();
@@ -25,43 +45,43 @@ public class Main {
 		}
 	}
 	
-	public static void render() {
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		glColor3f(0, 1.0f, 0);
-		glBegin(GL_QUADS);
-		{
-			glVertex2f(-0.1f, -0.1f);
-			glVertex2f(0.1f, -0.1f);
-			glVertex2f(0.1f, 0.1f);
-			glVertex2f(-0.1f, 0.1f);
+	public static void update(double delta) {
+		if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
+			testEntity.setRotation(testEntity.getRotation()+0.001f);
 		}
-		glEnd();
+	}
+	
+	public static void render() {
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+		
+		renderer.drawEntity(testEntity);
+		
+		//Refresh display
 		Display.update();
 	}
 
 	public static void initialize() throws LWJGLException {
 		Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
 		Display.setTitle("Here To Mars");
-		Display.create(new PixelFormat(0, 16, 1));
+		Display.create();
 		
-		//Set viewport size of game window
 		glViewport(0, 0, WIDTH, HEIGHT);
+		glEnable(GL_CULL_FACE);
+	    glEnable(GL_BLEND);
+	    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		
-		//Set matrix operations to apply to the projection matrix stack
-		glMatrixMode(GL_PROJECTION);
+		/*
+		 * Init rendering
+		 */
+		Matrix4f projection = new Matrix4f();
+		Util.mtxOrtho(projection, 0, WIDTH, HEIGHT, 0, -1, 1);
 		
-		//Set up the camera for 2D
-		float aspect = (float)WIDTH / (float)HEIGHT;
-		glOrtho(-aspect, aspect, -1, 1, -1, 1);
-
-		//Set matrix operations to apply to transformations of game objects
-		glMatrixMode(GL_MODELVIEW);
-		//Default the modelview matrix
-		glLoadIdentity();
-		
-		glEnable(GL_STENCIL_TEST);
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f); //background black
+		renderer = new Renderer();
+		shader = new BasicShader();
+		shader.bind();
+		shader.setUniformMatrix4("projection", projection);
+		renderer.initialize(shader);
 	}
 	
 	public static void finish() {
