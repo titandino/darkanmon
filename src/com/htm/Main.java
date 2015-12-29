@@ -2,6 +2,8 @@ package com.htm;
 
 import static org.lwjgl.opengl.GL11.*;
 
+import java.io.IOException;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
@@ -13,6 +15,8 @@ import com.htm.game.Entity;
 import com.htm.graphic.Renderer;
 import com.htm.graphic.shader.Shader;
 import com.htm.graphic.shader.impl.BasicShader;
+import com.htm.graphic.texture.Texture;
+import com.htm.utils.TextureLoader;
 import com.htm.utils.Util;
 
 public class Main {
@@ -22,8 +26,10 @@ public class Main {
 	
 	private static Shader shader;
 	private static Renderer renderer;
+	private static TextureLoader texLoader = new TextureLoader();
 	
-	public static Entity testEntity = new Entity(new Vector2f(200.0f, 200.0f), new Vector2f(70.0f, 150.0f));
+	public static Texture testTexture;
+	public static Entity testEntity;
 	
 	public static void main(String[] args) {
 		try {
@@ -65,6 +71,13 @@ public class Main {
 		Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
 		Display.setTitle("Here To Mars");
 		Display.create();
+		
+		try {
+			testTexture = texLoader.getTexture("test.png");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		testEntity = new Entity(testTexture, new Vector2f(200.0f, 200.0f), new Vector2f(250.0f, 250.0f));
 		
 		glViewport(0, 0, WIDTH, HEIGHT);
 		glEnable(GL_CULL_FACE);

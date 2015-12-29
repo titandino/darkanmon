@@ -3,9 +3,6 @@ package com.htm.graphic.shader;
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL11.*;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.util.HashMap;
 
@@ -14,6 +11,8 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
+
+import com.htm.utils.ResourceManager;
 
 public abstract class Shader {
 	
@@ -27,8 +26,8 @@ public abstract class Shader {
 		if (program == 0) {
 			System.err.println("Error creating shader. Could not find valid memory location.");
 		}
-		addVertexShader(loadShader(file+".vs"));
-	    addFragmentShader(loadShader(file+".fs"));
+		addVertexShader(ResourceManager.loadShader(file+".vs"));
+	    addFragmentShader(ResourceManager.loadShader(file+".fs"));
 		compile();
 	}
 
@@ -113,20 +112,5 @@ public abstract class Shader {
 
 	public void bind() {
 		glUseProgram(program);
-	}
-	
-	public String loadShader(String fileName) {
-		StringBuilder shader = new StringBuilder();
-		try {
-			BufferedReader reader = new BufferedReader(new FileReader("./data/shad/"+fileName));
-			String line;
-			while((line = reader.readLine()) != null) {
-				shader.append(line).append("\n");
-			}
-			reader.close();
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
-		return shader.toString();
 	}
 }
