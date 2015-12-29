@@ -41,29 +41,17 @@ import com.htm.graphic.texture.Texture;
 public class TextureLoader {
 
 	/** The colour model including alpha for the GL image */
-	private ColorModel glAlphaColorModel;
+	private static ColorModel glAlphaColorModel = new ComponentColorModel(ColorSpace.getInstance(ColorSpace.CS_sRGB), new int[] { 8, 8, 8, 8 }, true, false, ComponentColorModel.TRANSLUCENT, DataBuffer.TYPE_BYTE);
 
 	/** The colour model for the GL image */
-	private ColorModel glColorModel;
-
-	/**
-	 * Create a new texture loader based on the game panel
-	 * 
-	 * @param gl
-	 *            The GL content in which the textures should be loaded
-	 */
-	public TextureLoader() {
-		glAlphaColorModel = new ComponentColorModel(ColorSpace.getInstance(ColorSpace.CS_sRGB), new int[] { 8, 8, 8, 8 }, true, false, ComponentColorModel.TRANSLUCENT, DataBuffer.TYPE_BYTE);
-
-		glColorModel = new ComponentColorModel(ColorSpace.getInstance(ColorSpace.CS_sRGB), new int[] { 8, 8, 8, 0 }, false, false, ComponentColorModel.OPAQUE, DataBuffer.TYPE_BYTE);
-	}
+	private static ColorModel glColorModel = new ComponentColorModel(ColorSpace.getInstance(ColorSpace.CS_sRGB), new int[] { 8, 8, 8, 0 }, false, false, ComponentColorModel.OPAQUE, DataBuffer.TYPE_BYTE);
 
 	/**
 	 * Create a new texture ID
 	 * 
 	 * @return A new texture ID
 	 */
-	private int createTextureID() {
+	private static int createTextureID() {
 		IntBuffer tmp = createIntBuffer(1);
 		GL11.glGenTextures(tmp);
 		return tmp.get(0);
@@ -78,7 +66,7 @@ public class TextureLoader {
 	 * @throws IOException
 	 *             Indicates a failure to access the resource
 	 */
-	public Texture getTexture(String resourceName) throws IOException {
+	public static Texture getTexture(String resourceName) throws IOException {
 		Texture tex = ResourceManager.textures.get(resourceName);
 
 		if (tex != null) {
@@ -112,7 +100,7 @@ public class TextureLoader {
 	 * @throws IOException
 	 *             Indicates a failure to access the resource
 	 */
-	public Texture getTexture(String resourceName, int dstPixelFormat, int minFilter, int magFilter) throws IOException {
+	public static Texture getTexture(String resourceName, int dstPixelFormat, int minFilter, int magFilter) throws IOException {
 		int srcPixelFormat = 0;
 
 		// create the texture ID for this texture
@@ -155,7 +143,7 @@ public class TextureLoader {
 	 *            The target number
 	 * @return The power of 2
 	 */
-	private int get2Fold(int fold) {
+	private static int get2Fold(int fold) {
 		int ret = 2;
 		while (ret < fold) {
 			ret *= 2;
@@ -173,7 +161,7 @@ public class TextureLoader {
 	 * @return A buffer containing the data
 	 */
 	@SuppressWarnings("rawtypes")
-	private ByteBuffer convertImageData(BufferedImage bufferedImage, Texture texture) {
+	private static ByteBuffer convertImageData(BufferedImage bufferedImage, Texture texture) {
 		ByteBuffer imageBuffer = null;
 		WritableRaster raster;
 		BufferedImage texImage;
@@ -237,7 +225,7 @@ public class TextureLoader {
 	 * @throws IOException
 	 *             Indicates a failure to find a resource
 	 */
-	private BufferedImage loadImage(String ref) throws IOException {
+	private static BufferedImage loadImage(String ref) throws IOException {
 		File file = new File("./data/tex/"+ref);
 
 		if (!file.exists()) {
@@ -257,7 +245,7 @@ public class TextureLoader {
 	 *            how many int to contain
 	 * @return created IntBuffer
 	 */
-	protected IntBuffer createIntBuffer(int size) {
+	protected static IntBuffer createIntBuffer(int size) {
 		ByteBuffer temp = ByteBuffer.allocateDirect(4 * size);
 		temp.order(ByteOrder.nativeOrder());
 

@@ -26,7 +26,6 @@ public class Main {
 	
 	private static Shader shader;
 	private static Renderer renderer;
-	private static TextureLoader texLoader = new TextureLoader();
 	
 	public static Texture testTexture;
 	public static Entity testEntity;
@@ -73,11 +72,11 @@ public class Main {
 		Display.create();
 		
 		try {
-			testTexture = texLoader.getTexture("test.png");
+			testTexture = TextureLoader.getTexture("test.png");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		testEntity = new Entity(testTexture, new Vector2f(200.0f, 200.0f), new Vector2f(250.0f, 250.0f));
+		testEntity = new Entity(testTexture, new Vector2f(0.0f, 0.0f), new Vector2f(800.0f, 600.0f));
 		
 		glViewport(0, 0, WIDTH, HEIGHT);
 		glEnable(GL_CULL_FACE);
