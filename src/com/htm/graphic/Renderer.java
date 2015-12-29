@@ -12,7 +12,7 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
-import com.htm.game.Entity;
+import com.htm.game.object.Entity;
 import com.htm.graphic.shader.Shader;
 
 public class Renderer {

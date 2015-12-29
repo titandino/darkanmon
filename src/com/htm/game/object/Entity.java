@@ -1,4 +1,4 @@
-package com.htm.game;
+package com.htm.game.object;
 
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
