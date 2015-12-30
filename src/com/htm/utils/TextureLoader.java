@@ -66,17 +66,20 @@ public class TextureLoader {
 	 * @throws IOException
 	 *             Indicates a failure to access the resource
 	 */
-	public static Texture getTexture(String resourceName) throws IOException {
+	public static Texture getTexture(String resourceName) {
 		Texture tex = ResourceManager.textures.get(resourceName);
 
 		if (tex != null) {
 			return tex;
 		}
 
-		tex = getTexture(resourceName, // target
-				GL11.GL_RGBA, // dst pixel format
-				GL11.GL_LINEAR, // min filter (unused)
-				GL11.GL_LINEAR);
+		try {
+			tex = getTexture(resourceName, GL11.GL_RGBA, GL11.GL_LINEAR, GL11.GL_LINEAR);
+		} catch (IOException e) {
+			System.err.println("Error loading texture: "+resourceName);
+			e.printStackTrace();
+			System.exit(1);
+		}
 
 		ResourceManager.textures.put(resourceName, tex);
 
@@ -132,7 +135,9 @@ public class TextureLoader {
 		// produce a texture from the byte buffer
 
 		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, dstPixelFormat, get2Fold(bufferedImage.getWidth()), get2Fold(bufferedImage.getHeight()), 0, srcPixelFormat, GL11.GL_UNSIGNED_BYTE, textureBuffer);
-
+		
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
+		
 		return texture;
 	}
 

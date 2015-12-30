@@ -41,9 +41,9 @@ public class Game {
 	
 	public void init() {
 		glViewport(0, 0, width, height);
-//		glEnable(GL_CULL_FACE);
-//	    glEnable(GL_BLEND);
-//	    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glEnable(GL_CULL_FACE);
+	    glEnable(GL_BLEND); //enable alpha
+	    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		
 		Matrix4f projection = new Matrix4f();
 		Util.mtxOrtho(projection, 0, width, height, 0, -1, 1);
@@ -52,6 +52,7 @@ public class Game {
 		shader = new BasicShader();
 		shader.bind();
 		shader.setUniformMatrix4("projection", projection);
+		shader.setUniformInteger("image", 0);
 		renderer.initialize(shader);
 	}
 	

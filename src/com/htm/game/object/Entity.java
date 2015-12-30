@@ -17,6 +17,7 @@ public class Entity {
 		this.position = position;
 		this.scale = scale;
 		this.rotation = 0.0f;
+		this.texture = texture;
 	}
 	
 	public Vector2f getPosition() {
