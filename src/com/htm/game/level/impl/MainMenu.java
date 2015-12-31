@@ -1,11 +1,13 @@
 package com.htm.game.level.impl;
 
+import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector2f;
 
 import com.htm.game.level.Level;
 import com.htm.game.object.Entity;
 import com.htm.graphic.texture.Texture;
 import com.htm.utils.TextureLoader;
+import com.htm.utils.Util;
 
 public class MainMenu extends Level {
 	
@@ -26,7 +28,11 @@ public class MainMenu extends Level {
 
 	@Override
 	public void update(double delta) {
-		
+		if (Util.mouseOver(play) && Mouse.isButtonDown(0)) {
+			play.setTexture(bgTex);
+		} else {
+			play.setTexture(playTex);
+		}
 	}
 
 	@Override
