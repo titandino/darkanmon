@@ -13,11 +13,18 @@ public class Entity {
 	private Texture texture;
 	private Vector3f color;
 	
+	private Vector2f velocity;
+	
 	public Entity(Texture texture, Vector2f position, Vector2f scale) {
 		this.position = position;
 		this.scale = scale;
 		this.rotation = 0.0f;
 		this.texture = texture;
+		this.velocity = new Vector2f(0.0f, 0.0f);
+	}
+	
+	public void update(double delta) {
+		
 	}
 	
 	public Vector2f getPosition() {
@@ -58,5 +65,13 @@ public class Entity {
 
 	public void setColor(Vector3f color) {
 		this.color = color;
+	}
+
+	public Vector2f getVelocity() {
+		return velocity;
+	}
+
+	public void setVelocity(Vector2f velocity) {
+		this.velocity = velocity;
 	}
 }

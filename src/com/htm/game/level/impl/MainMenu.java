@@ -1,5 +1,7 @@
 package com.htm.game.level.impl;
 
+import java.util.ArrayList;
+
 import org.lwjgl.util.vector.Vector2f;
 
 import com.htm.Main;
@@ -15,11 +17,16 @@ public class MainMenu extends Level {
 	public Texture playTex;
 	public Entity bg;
 	public Entity play;
+	
+	public Texture star;
+	
+	public ArrayList<Entity> stars = new ArrayList<Entity>();
 
 	@Override
 	public void init() {
 		playTex = TextureLoader.getTexture("play.png");
 		bgTex = TextureLoader.getTexture("mainmenubg.png");
+		star = TextureLoader.getTexture("star.png");
 		bg = new Entity(bgTex, new Vector2f(0.0f, 0.0f), new Vector2f(800.0f, 600.0f));
 		play = new Entity(playTex, new Vector2f(150.0f, 200.0f), new Vector2f(128.0f, 60.0f));
 		addEntity(bg);
