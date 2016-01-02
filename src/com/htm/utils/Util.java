@@ -1,11 +1,7 @@
 package com.htm.utils;
 
-import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
-
-import com.htm.Main;
-import com.htm.game.object.Entity;
 
 public class Util {
 
@@ -13,11 +9,6 @@ public class Util {
 		float left = rect.x; float right = rect.x+width;
 		float top = rect.y+height; float bottom = rect.y;
 		return !(point.x < left || point.x > right || point.y > top || point.y < bottom);
-	}
-	
-	public static boolean mouseOver(Entity entity) {
-		Vector2f mouse = new Vector2f(Mouse.getX(), Main.HEIGHT-Mouse.getY());
-		return collidesPointToRect(mouse, entity.getPosition(), entity.getScale().x, entity.getScale().y);
 	}
 	
 	public static void mtxOrtho(Matrix4f m, float left, float right, float bottom, float top,

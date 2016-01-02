@@ -1,13 +1,13 @@
 package com.htm.game.level.impl;
 
-import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector2f;
 
+import com.htm.Main;
 import com.htm.game.level.Level;
 import com.htm.game.object.Entity;
 import com.htm.graphic.texture.Texture;
+import com.htm.utils.Mouse;
 import com.htm.utils.TextureLoader;
-import com.htm.utils.Util;
 
 public class MainMenu extends Level {
 	
@@ -21,17 +21,15 @@ public class MainMenu extends Level {
 		playTex = TextureLoader.getTexture("play.png");
 		bgTex = TextureLoader.getTexture("mainmenubg.png");
 		bg = new Entity(bgTex, new Vector2f(0.0f, 0.0f), new Vector2f(800.0f, 600.0f));
-		play = new Entity(playTex, new Vector2f(150.0f, 200.0f), new Vector2f(128.0f, 128.0f));
+		play = new Entity(playTex, new Vector2f(150.0f, 200.0f), new Vector2f(128.0f, 60.0f));
 		addEntity(bg);
 		addEntity(play);
 	}
 
 	@Override
 	public void update(double delta) {
-		if (Util.mouseOver(play) && Mouse.isButtonDown(0)) {
-			play.setTexture(bgTex);
-		} else {
-			play.setTexture(playTex);
+		if (Mouse.mouseOver(play) && Mouse.clicked(0)) {
+			Main.game.setLevel(new Tutorial());
 		}
 	}
 
