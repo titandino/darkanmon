@@ -14,6 +14,7 @@ public class Entity {
 	private Vector3f color;
 	
 	private Vector2f velocity;
+	private float angularVelocity;
 	
 	public Entity(Texture texture, Vector2f position, Vector2f scale) {
 		this.position = position;
@@ -21,10 +22,13 @@ public class Entity {
 		this.rotation = 0.0f;
 		this.texture = texture;
 		this.velocity = new Vector2f(0.0f, 0.0f);
+		this.angularVelocity = 0.0f;
 	}
 	
 	public void update(double delta) {
-		
+		this.rotation += angularVelocity*delta;
+		this.position.x += velocity.x*delta;
+		this.position.y += velocity.y*delta;
 	}
 	
 	public Vector2f getPosition() {
@@ -73,5 +77,13 @@ public class Entity {
 
 	public void setVelocity(Vector2f velocity) {
 		this.velocity = velocity;
+	}
+
+	public float getAngularVelocity() {
+		return angularVelocity;
+	}
+
+	public void setAngularVelocity(float angularVelocity) {
+		this.angularVelocity = angularVelocity;
 	}
 }

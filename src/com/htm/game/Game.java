@@ -58,7 +58,7 @@ public class Game {
 	
 	public void update(double delta) {
 		if (level != null)
-			level.update(delta);
+			level._update(delta);
 	}
 	
 	public void render() {

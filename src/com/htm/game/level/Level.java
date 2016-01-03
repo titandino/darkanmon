@@ -31,6 +31,14 @@ public abstract class Level {
 			entities.remove(entity);
 	}
 	
+	public void _update(double delta) {
+		for (Entity e : entities) {
+			if (e != null)
+				e.update(delta);
+		}
+		update(delta);
+	}
+	
 	public void render(Shader shader, Renderer renderer) {
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);

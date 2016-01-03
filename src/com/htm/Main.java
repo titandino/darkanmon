@@ -12,14 +12,13 @@ public class Main {
 	public static Game game;
 
 	public static void main(String[] args) {
-		long lastTime = System.currentTimeMillis();
+		long lastTime = System.nanoTime();
 		double delta = 0;
 		initialize();
 		while (!Display.isCloseRequested()) {
-			long curr = System.currentTimeMillis();
-			delta = (curr - lastTime) / 1000;
+			long curr = System.nanoTime();
+			delta = (curr - lastTime) / 1000000000.0;
 			lastTime = curr;
-
 			update(delta);
 			render();
 		}
