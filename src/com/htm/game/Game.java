@@ -9,14 +9,18 @@ import org.lwjgl.util.vector.Matrix4f;
 
 import com.htm.game.level.Level;
 import com.htm.graphic.Renderer;
+import com.htm.graphic.TextRenderer;
 import com.htm.graphic.shader.Shader;
 import com.htm.graphic.shader.impl.BasicShader;
+import com.htm.graphic.shader.impl.TextShader;
 import com.htm.utils.Util;
 
 public class Game {
 	
 	private Shader shader;
+	private Shader textShader;
 	private Renderer renderer;
+	private TextRenderer textRenderer;
 	
 	private Level level;
 	
@@ -54,6 +58,14 @@ public class Game {
 		shader.setUniformMatrix4("projection", projection);
 		shader.setUniformInteger("image", 0);
 		renderer.initialize(shader);
+		
+		textRenderer = new TextRenderer();
+		textShader = new TextShader();
+		textShader.bind();
+		textShader.setUniformMatrix4("projection", projection);
+		textShader.setUniformInteger("text", 0);
+		textRenderer.initialize(textShader);
+		textRenderer.loadFont("sans.ttf", 20);
 	}
 	
 	public void update(double delta) {
@@ -63,7 +75,7 @@ public class Game {
 	
 	public void render() {
 		if (level != null)
-			level.render(shader, renderer);
+			level.render(renderer, textRenderer);
 	}
 
 	public Level getLevel() {
@@ -108,5 +120,13 @@ public class Game {
 	public void setWindowName(String windowName) {
 		Display.setTitle(windowName);
 		this.windowName = windowName;
+	}
+
+	public TextRenderer getTextRenderer() {
+		return textRenderer;
+	}
+
+	public Shader getTextShader() {
+		return textShader;
 	}
 }

@@ -148,7 +148,7 @@ public class TextureLoader {
 	 *            The target number
 	 * @return The power of 2
 	 */
-	private static int get2Fold(int fold) {
+	public static int get2Fold(int fold) {
 		int ret = 2;
 		while (ret < fold) {
 			ret *= 2;
@@ -166,7 +166,7 @@ public class TextureLoader {
 	 * @return A buffer containing the data
 	 */
 	@SuppressWarnings("rawtypes")
-	private static ByteBuffer convertImageData(BufferedImage bufferedImage, Texture texture) {
+	public static ByteBuffer convertImageData(BufferedImage bufferedImage, Texture texture) {
 		ByteBuffer imageBuffer = null;
 		WritableRaster raster;
 		BufferedImage texImage;
@@ -187,6 +187,50 @@ public class TextureLoader {
 
 		texture.setHeight(texHeight);
 		texture.setWidth(texWidth);
+
+		// create a raster that can be used by OpenGL as a source
+
+		// for a texture
+
+		if (bufferedImage.getColorModel().hasAlpha()) {
+			raster = Raster.createInterleavedRaster(DataBuffer.TYPE_BYTE, texWidth, texHeight, 4, null);
+			texImage = new BufferedImage(glAlphaColorModel, raster, false, new Hashtable());
+		} else {
+			raster = Raster.createInterleavedRaster(DataBuffer.TYPE_BYTE, texWidth, texHeight, 3, null);
+			texImage = new BufferedImage(glColorModel, raster, false, new Hashtable());
+		}
+
+		// copy the source image into the produced image
+
+		Graphics g = texImage.getGraphics();
+		g.setColor(new Color(0f, 0f, 0f, 0f));
+		g.fillRect(0, 0, texWidth, texHeight);
+		g.drawImage(bufferedImage, 0, 0, null);
+
+		// build a byte buffer from the temporary image
+
+		// that be used by OpenGL to produce a texture.
+
+		byte[] data = ((DataBufferByte) texImage.getRaster().getDataBuffer()).getData();
+
+		imageBuffer = ByteBuffer.allocateDirect(data.length);
+		imageBuffer.order(ByteOrder.nativeOrder());
+		imageBuffer.put(data, 0, data.length);
+		imageBuffer.flip();
+
+		return imageBuffer;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public static ByteBuffer convertTextImageData(BufferedImage bufferedImage, com.htm.graphic.Character texture) {
+		ByteBuffer imageBuffer = null;
+		WritableRaster raster;
+		BufferedImage texImage;
+
+		int texWidth = bufferedImage.getWidth();
+		int texHeight = bufferedImage.getHeight();
+
+		texture.setSize(texWidth);
 
 		// create a raster that can be used by OpenGL as a source
 
@@ -250,7 +294,7 @@ public class TextureLoader {
 	 *            how many int to contain
 	 * @return created IntBuffer
 	 */
-	protected static IntBuffer createIntBuffer(int size) {
+	public static IntBuffer createIntBuffer(int size) {
 		ByteBuffer temp = ByteBuffer.allocateDirect(4 * size);
 		temp.order(ByteOrder.nativeOrder());
 

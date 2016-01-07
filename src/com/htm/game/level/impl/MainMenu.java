@@ -3,9 +3,12 @@ package com.htm.game.level.impl;
 import java.util.ArrayList;
 
 import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector3f;
+
 import com.htm.Main;
 import com.htm.game.level.Level;
 import com.htm.game.object.Entity;
+import com.htm.game.object.Text;
 import com.htm.graphic.texture.Texture;
 import com.htm.utils.Mouse;
 import com.htm.utils.TextureLoader;
@@ -20,6 +23,8 @@ public class MainMenu extends Level {
 	
 	public Texture star;
 	
+	public Text test;
+	
 	public ArrayList<Entity> stars = new ArrayList<Entity>();
 
 	@Override
@@ -27,6 +32,7 @@ public class MainMenu extends Level {
 		playTex = TextureLoader.getTexture("play.png");
 		bgTex = TextureLoader.getTexture("mainmenubg.png");
 		star = TextureLoader.getTexture("star.png");
+		test = new Text("Here To Mars", new Vector2f(150.0f, 25.0f), 75, new Vector3f(0.0f, 1.0f, 0.0f));
 		bg = new Entity(bgTex, new Vector2f(0.0f, 0.0f), new Vector2f(800.0f, 600.0f));
 		play = new Entity(playTex, new Vector2f(150.0f, 200.0f), new Vector2f(128.0f, 60.0f));
 		addEntity(bg);
@@ -36,6 +42,7 @@ public class MainMenu extends Level {
 			starEnt.setAngularVelocity(Util.random(1, 4));
 			addEntity(starEnt);
 		}
+		addText(test);
 		addEntity(play);
 	}
 
