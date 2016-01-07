@@ -24,6 +24,8 @@ import java.util.HashMap;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.vector.Vector2f;
+
 import com.htm.game.object.Text;
 import com.htm.graphic.shader.Shader;
 import com.htm.utils.TextureLoader;
@@ -47,12 +49,14 @@ public class TextRenderer {
 		glActiveTexture(GL_TEXTURE0);
 		glBindVertexArray(vaoId);
 		
-		int xOff = 0;
+		float xOff = 0;
 		
 		for (char c : text.getText().toCharArray()) {
 			Character ch = characters.get(c);
-			if (ch == null)
+			if (ch == null) {
+				xOff += text.getSize()/10;
 				continue;
+			}
 			float x = text.getPosition().x + text.getSize() + xOff;
 			float y = text.getPosition().y + text.getSize();
 
@@ -86,7 +90,7 @@ public class TextRenderer {
 
 			glDrawArrays(GL_TRIANGLES, 0, 6);
 
-			xOff += text.getSize()/2;
+			xOff += ch.getSize().x+ch.getSize().x/8;
 		}
 		glBindVertexArray(0);
 		glBindTexture(GL_TEXTURE_2D, 0);
@@ -97,9 +101,8 @@ public class TextRenderer {
 			File file = new File("./data/font/"+fileName);
 			characters.clear();
 
-			Font font1 = Font.createFont(Font.TRUETYPE_FONT, file); //TODO fix font placement
-			Font fontt = font1.deriveFont(12.0f).deriveFont(Font.PLAIN);
-			Font font = new Font("Comic Sans MS", Font.BOLD, size*2);
+			Font font1 = Font.createFont(Font.TRUETYPE_FONT, file);
+			Font font = font1.deriveFont((float) size*8).deriveFont(Font.BOLD);
 			
 			glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
@@ -113,7 +116,7 @@ public class TextRenderer {
 								
 				glBindTexture(GL_TEXTURE_2D, texId);
 				
-				Character character = new Character(texId, size);
+				Character character = new Character(texId);
 				
 				BufferedImage image = new BufferedImage(1, 1, BufferedImage.TYPE_4BYTE_ABGR);
 				Graphics2D g1 = image.createGraphics();
@@ -126,14 +129,13 @@ public class TextRenderer {
 				
 				if (rect.getHeight() == 0 || rect.getWidth() == 0)
 					continue;
-								
-				//image = new BufferedImage((int)Math.ceil(rect.getWidth()), (int)Math.ceil(rect.getHeight()), BufferedImage.TYPE_4BYTE_ABGR);
-				image = new BufferedImage(64, 64, BufferedImage.TYPE_4BYTE_ABGR);
+						
+				image = new BufferedImage(128, 128, BufferedImage.TYPE_4BYTE_ABGR);
 				
 				Graphics2D g = image.createGraphics();
 				g.setColor(Color.WHITE);
 				g.setFont(font);
-				g.drawString(""+c, 0, 50);
+				g.drawString(""+c, (int) rect.getWidth(), image.getHeight()-4);
 				
 				ByteBuffer textureBuffer = TextureLoader.convertTextImageData(image, character);
 				
@@ -143,6 +145,8 @@ public class TextRenderer {
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+				
+				character.setSize(new Vector2f((float) rect.getWidth(), (float) rect.getHeight()));
 				
 				characters.put(c, character);
 			}
@@ -174,7 +178,7 @@ public class TextRenderer {
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
 	}
-
+	
 	public Shader getShader() {
 		return shader;
 	}

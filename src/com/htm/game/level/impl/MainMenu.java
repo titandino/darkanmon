@@ -24,15 +24,21 @@ public class MainMenu extends Level {
 	public Texture star;
 	
 	public Text test;
+	public Text test2;
 	
 	public ArrayList<Entity> stars = new ArrayList<Entity>();
+	
+	float r = 0.0f;
+	float g = 0.0f;
+	float b = 0.0f;
 
 	@Override
 	public void init() {
 		playTex = TextureLoader.getTexture("play.png");
 		bgTex = TextureLoader.getTexture("mainmenubg.png");
 		star = TextureLoader.getTexture("star.png");
-		test = new Text("Here To Mars", new Vector2f(150.0f, 25.0f), 75, new Vector3f(0.0f, 1.0f, 0.0f));
+		test = new Text("Here To Mars", new Vector2f(150.0f, 25.0f), 50, new Vector3f(0.0f, 1.0f, 0.0f));
+		test2 = new Text("Here To Mars", new Vector2f(150.0f, 25.0f), 100, new Vector3f(0.0f, 1.0f, 0.0f));
 		bg = new Entity(bgTex, new Vector2f(0.0f, 0.0f), new Vector2f(800.0f, 600.0f));
 		play = new Entity(playTex, new Vector2f(150.0f, 200.0f), new Vector2f(128.0f, 60.0f));
 		addEntity(bg);
@@ -43,6 +49,7 @@ public class MainMenu extends Level {
 			addEntity(starEnt);
 		}
 		addText(test);
+		addText(test2);
 		addEntity(play);
 	}
 
@@ -51,6 +58,10 @@ public class MainMenu extends Level {
 		if (Mouse.mouseOver(play) && Mouse.clicked(0)) {
 			Main.game.setLevel(new Tutorial());
 		}
+		r = 1/Util.random(1, 10);
+		g = 1/Util.random(1, 10);
+		b = 1/Util.random(1, 10);
+		test2.setColor(new Vector3f(r, g, b));
 	}
 
 	@Override

@@ -1,24 +1,25 @@
 package com.htm.graphic;
 
+import org.lwjgl.util.vector.Vector2f;
+
 public class Character {
 	
 	private int textureId;
-	private float size;
+	private Vector2f size;
 	
-	public Character(int textureId, float size) {
+	public Character(int textureId) {
 		this.textureId = textureId;
-		this.size = size;
 	}
 
 	public int getTextureId() {
 		return textureId;
 	}
 
-	public float getSize() {
+	public Vector2f getSize() {
 		return size;
 	}
 
-	public void setSize(float size) {
+	public void setSize(Vector2f size) {
 		this.size = size;
 	}
 }

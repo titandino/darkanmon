@@ -230,8 +230,6 @@ public class TextureLoader {
 		int texWidth = bufferedImage.getWidth();
 		int texHeight = bufferedImage.getHeight();
 
-		texture.setSize(texWidth);
-
 		// create a raster that can be used by OpenGL as a source
 
 		// for a texture
