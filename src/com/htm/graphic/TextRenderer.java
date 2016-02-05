@@ -57,8 +57,8 @@ public class TextRenderer {
 				xOff += text.getSize()/10;
 				continue;
 			}
-			float x = text.getPosition().x + text.getSize() + xOff;
-			float y = text.getPosition().y + text.getSize();
+			float x = text.getPosition().x + xOff;
+			float y = text.getPosition().y;
 
 			float width = text.getSize();
 			float height = text.getSize();

@@ -1,11 +1,10 @@
 package com.htm.game.level.impl;
 
-import java.util.ArrayList;
-
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import com.htm.Main;
+import com.htm.game.collision.AABB;
 import com.htm.game.level.Level;
 import com.htm.game.object.Entity;
 import com.htm.game.object.Text;
@@ -18,16 +17,15 @@ public class MainMenu extends Level {
 	
 	public Texture bgTex;
 	public Texture playTex;
+	
 	public Entity bg;
 	public Entity play;
 	
 	public Texture star;
+	public Texture aabb;
 	
-	public Text test;
-	public Text test2;
-	
-	public ArrayList<Entity> stars = new ArrayList<Entity>();
-	
+	public Text hereToMars;
+				
 	float r = 0.0f;
 	float g = 0.0f;
 	float b = 0.0f;
@@ -37,8 +35,8 @@ public class MainMenu extends Level {
 		playTex = TextureLoader.getTexture("play.png");
 		bgTex = TextureLoader.getTexture("mainmenubg.png");
 		star = TextureLoader.getTexture("star.png");
-		test = new Text("Here To Mars", new Vector2f(150.0f, 25.0f), 50, new Vector3f(0.0f, 1.0f, 0.0f));
-		test2 = new Text("Here To Mars", new Vector2f(150.0f, 25.0f), 100, new Vector3f(0.0f, 1.0f, 0.0f));
+		aabb = TextureLoader.getTexture("aabbtest.png");
+		hereToMars = new Text("Here To Mars", new Vector2f(100.0f, 40.0f), 100, new Vector3f(0.0f, 1.0f, 0.0f));
 		bg = new Entity(bgTex, new Vector2f(0.0f, 0.0f), new Vector2f(800.0f, 600.0f));
 		play = new Entity(playTex, new Vector2f(150.0f, 200.0f), new Vector2f(128.0f, 60.0f));
 		addEntity(bg);
@@ -48,8 +46,26 @@ public class MainMenu extends Level {
 			starEnt.setAngularVelocity(Util.random(1, 4));
 			addEntity(starEnt);
 		}
-		addText(test);
-		addText(test2);
+		
+		Entity h1 = new Entity(aabb, new Vector2f(100, 300), new Vector2f(50, 50));
+		Entity h2 = new Entity(aabb, new Vector2f(400, 300), new Vector2f(50, 50));
+		h1.setVelocity(new Vector2f(20, 0));
+		h2.setVelocity(new Vector2f(-20, 0));
+		addEntity(h1);
+		addEntity(h2);
+		new AABB(h1);
+		new AABB(h2);
+		
+		Entity v1 = new Entity(aabb, new Vector2f(500, 100), new Vector2f(50, 50));
+		Entity v2 = new Entity(aabb, new Vector2f(500, 400), new Vector2f(50, 50));
+		v1.setVelocity(new Vector2f(0, 19));
+		v2.setVelocity(new Vector2f(0, -20));
+		addEntity(v1);
+		addEntity(v2);
+		new AABB(v1);
+		new AABB(v2);
+
+		addText(hereToMars);
 		addEntity(play);
 	}
 
@@ -58,12 +74,21 @@ public class MainMenu extends Level {
 		if (Mouse.mouseOver(play) && Mouse.clicked(0)) {
 			Main.game.setLevel(new Tutorial());
 		}
-		r = 1/Util.random(1, 10);
-		g = 1/Util.random(1, 10);
-		b = 1/Util.random(1, 10);
-		test2.setColor(new Vector3f(r, g, b));
+		
+		r += (float) (0.05*delta);
+		g += (float) (0.10*delta);
+		b += (float) (0.05*delta);
+		
+		if (r > 1.0f)
+			r = 0;
+		if (g > 1.0f)
+			g = 0;
+		if (b > 1.0f)
+			b = 0;
+		
+		hereToMars.setColor(new Vector3f(r, g, b));
 	}
-
+	
 	@Override
 	public void finish() {
 		

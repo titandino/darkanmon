@@ -84,7 +84,7 @@ public class Game {
 
 	public void setLevel(Level level) {
 		if (this.level != null)
-			this.level.finish();
+			this.level._finish();
 		this.level = level;
 		this.level.init();
 	}

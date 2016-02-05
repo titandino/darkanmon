@@ -3,6 +3,7 @@ package com.htm.game.object;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
+import com.htm.game.collision.Collider;
 import com.htm.graphic.texture.Texture;
 
 public class Entity {
@@ -12,6 +13,9 @@ public class Entity {
 	private Vector2f scale;
 	private Texture texture;
 	private Vector3f color;
+	
+	private Collider collider;
+	private boolean active;
 	
 	private Vector2f velocity;
 	private float angularVelocity;
@@ -27,8 +31,10 @@ public class Entity {
 	
 	public void update(double delta) {
 		this.rotation += angularVelocity*delta;
-		this.position.x += velocity.x*delta;
-		this.position.y += velocity.y*delta;
+		if (velocity != null) {
+			this.position.x += velocity.x*delta;
+			this.position.y += velocity.y*delta;
+		}
 	}
 	
 	public Vector2f getPosition() {
@@ -85,5 +91,21 @@ public class Entity {
 
 	public void setAngularVelocity(float angularVelocity) {
 		this.angularVelocity = angularVelocity;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	public Collider getCollider() {
+		return collider;
+	}
+
+	public void setCollider(Collider collider) {
+		this.collider = collider;
 	}
 }

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import org.lwjgl.opengl.Display;
 
+import com.htm.game.collision.CollisionManager;
 import com.htm.game.object.Entity;
 import com.htm.game.object.Text;
 import com.htm.graphic.Renderer;
@@ -27,11 +28,21 @@ public abstract class Level {
 	
 	public void addEntity(Entity entity) {
 		entities.add(entity);
+		entity.setActive(true);
 	}
 	
 	public void removeEntity(Entity entity) {
+		removeEntity(entity, false);
+	}
+	
+	public void removeEntity(Entity entity, boolean removeCollision) {
 		if (entities.contains(entity))
 			entities.remove(entity);
+		if (removeCollision) {
+			if (entity.getCollider() != null)
+				CollisionManager.removeCollider(entity.getCollider());
+		}
+		entity.setActive(false);
 	}
 	
 	public void addText(Text text) {
@@ -43,7 +54,13 @@ public abstract class Level {
 			texts.remove(text);
 	}
 	
-	public void _update(double delta) {
+	public final void _finish() {
+		finish();
+		CollisionManager.clearColliders();
+	}
+	
+	public final void _update(double delta) {
+		CollisionManager.processCollisions(delta);
 		for (Entity e : entities) {
 			if (e != null)
 				e.update(delta);

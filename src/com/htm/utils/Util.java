@@ -3,7 +3,6 @@ package com.htm.utils;
 import java.util.Random;
 
 import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector2f;
 
 public class Util {
 	
@@ -25,12 +24,6 @@ public class Util {
 	public static final double random(double min, double max) {
 		final double i = Math.abs(max - min);
 		return Math.min(min, max) + (i == 0 ? 0 : random((int) i));
-	}
-
-	public static boolean collidesPointToRect(Vector2f point, Vector2f rect, float width, float height) {
-		float left = rect.x; float right = rect.x+width;
-		float top = rect.y+height; float bottom = rect.y;
-		return !(point.x < left || point.x > right || point.y > top || point.y < bottom);
 	}
 	
 	public static void mtxOrtho(Matrix4f m, float left, float right, float bottom, float top,
