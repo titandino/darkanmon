@@ -49,8 +49,8 @@ public class MainMenu extends Level {
 		
 		Entity h1 = new Entity(aabb, new Vector2f(100, 300), new Vector2f(50, 50));
 		Entity h2 = new Entity(aabb, new Vector2f(400, 300), new Vector2f(50, 50));
-		h1.setVelocity(new Vector2f(20, 0));
-		h2.setVelocity(new Vector2f(-20, 0));
+		h1.setVelocity(new Vector2f(40, 0));
+		h2.setVelocity(new Vector2f(-40, 0));
 		addEntity(h1);
 		addEntity(h2);
 		new AABB(h1);
@@ -58,7 +58,7 @@ public class MainMenu extends Level {
 		
 		Entity v1 = new Entity(aabb, new Vector2f(500, 100), new Vector2f(50, 50));
 		Entity v2 = new Entity(aabb, new Vector2f(500, 400), new Vector2f(50, 50));
-		v1.setVelocity(new Vector2f(0, 19));
+		v1.setVelocity(new Vector2f(0, 20));
 		v2.setVelocity(new Vector2f(0, -20));
 		addEntity(v1);
 		addEntity(v2);
