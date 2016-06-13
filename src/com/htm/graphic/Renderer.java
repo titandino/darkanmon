@@ -27,10 +27,10 @@ public class Renderer {
 		//Initialize transformation matrix
 		Matrix4f transform = new Matrix4f();
 		//translate
-		transform.translate(new Vector3f(entity.getPosition().x, entity.getPosition().y, 0.0f));
+		transform.translate(new Vector3f((float) entity.getTransform().getTranslation().x, (float) entity.getTransform().getTranslation().y, 0.0f));
 		//rotate from the center of the entity
 		transform.translate(new Vector3f(entity.getScale().x/2, entity.getScale().y/2, 0.0f));
-		transform.rotate(entity.getRotation(), new Vector3f(0, 0, 1.0f));
+		transform.rotate((float) entity.getTransform().getRotation(), new Vector3f(0, 0, 1.0f));
 		//move the entity back to normal position
 		transform.translate(new Vector3f(-(entity.getScale().x/2), -(entity.getScale().y/2), 0.0f));
 		//scale

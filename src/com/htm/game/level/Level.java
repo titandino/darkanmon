@@ -4,6 +4,8 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.util.ArrayList;
 
+import org.dyn4j.dynamics.World;
+import org.dyn4j.geometry.Vector2;
 import org.lwjgl.opengl.Display;
 
 import com.htm.game.object.Entity;
@@ -16,9 +18,13 @@ public abstract class Level {
 	private ArrayList<Entity> entities;
 	private ArrayList<Text> texts;
 	
+	private World world;
+	
 	public Level() {
 		entities = new ArrayList<Entity>();
 		texts = new ArrayList<Text>();
+		this.world = new World();
+		world.setGravity(new Vector2(0.0, 0.0));
 	}
 	
 	public abstract void init();
@@ -26,18 +32,19 @@ public abstract class Level {
 	public abstract void finish();
 	
 	public void addEntity(Entity entity) {
+		addEntity(entity, false);
+	}
+	
+	public void addEntity(Entity entity, boolean hasPhysics) {
 		entities.add(entity);
+		if (hasPhysics)
+			world.addBody(entity);
 		entity.setActive(true);
 	}
 	
 	public void removeEntity(Entity entity) {
-		removeEntity(entity, false);
-	}
-	
-	public void removeEntity(Entity entity, boolean removeCollision) {
-		if (entities.contains(entity))
-			entities.remove(entity);
-		entity.setActive(false);
+		removeEntity(entity);
+		world.removeBody(entity);
 	}
 	
 	public void addText(Text text) {
@@ -49,6 +56,10 @@ public abstract class Level {
 			texts.remove(text);
 	}
 	
+	public void setGravity(Vector2 gravity) {
+		this.world.setGravity(gravity);
+	}
+	
 	public final void _finish() {
 		finish();
 	}
@@ -58,6 +69,7 @@ public abstract class Level {
 			if (e != null)
 				e.update(delta);
 		}
+		this.world.update(delta);
 		update(delta);
 	}
 	
@@ -84,6 +96,14 @@ public abstract class Level {
 
 	public ArrayList<Text> getTexts() {
 		return texts;
+	}
+
+	public World getWorld() {
+		return world;
+	}
+
+	public void setWorld(World world) {
+		this.world = world;
 	}
 
 }

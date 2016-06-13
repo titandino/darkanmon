@@ -16,7 +16,7 @@ import com.htm.graphic.shader.impl.TextShader;
 import com.htm.utils.Util;
 
 public class Game {
-	
+
 	private Shader shader;
 	private Shader textShader;
 	private Renderer renderer;
@@ -83,8 +83,9 @@ public class Game {
 	}
 
 	public void setLevel(Level level) {
-		if (this.level != null)
+		if (this.level != null) {
 			this.level._finish();
+		}
 		this.level = level;
 		this.level.init();
 	}
