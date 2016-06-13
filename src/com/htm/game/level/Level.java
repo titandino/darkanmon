@@ -24,7 +24,7 @@ public abstract class Level {
 		entities = new ArrayList<Entity>();
 		texts = new ArrayList<Text>();
 		this.world = new World();
-		world.setGravity(new Vector2(0.0, 0.0));
+		this.world.setGravity(new Vector2(0.0, 0.0));
 	}
 	
 	public abstract void init();
@@ -36,15 +36,15 @@ public abstract class Level {
 	}
 	
 	public void addEntity(Entity entity, boolean hasPhysics) {
-		entities.add(entity);
 		if (hasPhysics)
-			world.addBody(entity);
+			this.world.addBody(entity);
+		entities.add(entity);
 		entity.setActive(true);
 	}
 	
 	public void removeEntity(Entity entity) {
-		removeEntity(entity);
 		world.removeBody(entity);
+		removeEntity(entity);
 	}
 	
 	public void addText(Text text) {
@@ -65,11 +65,11 @@ public abstract class Level {
 	}
 	
 	public final void _update(double delta) {
+		this.world.update(delta);
 		for (Entity e : entities) {
 			if (e != null)
 				e.update(delta);
 		}
-		this.world.update(delta);
 		update(delta);
 	}
 	

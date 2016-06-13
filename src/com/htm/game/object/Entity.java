@@ -1,6 +1,8 @@
 package com.htm.game.object;
 
 import org.dyn4j.dynamics.Body;
+import org.dyn4j.geometry.Circle;
+import org.dyn4j.geometry.Geometry;
 import org.dyn4j.geometry.MassType;
 import org.dyn4j.geometry.Rectangle;
 import org.dyn4j.geometry.Vector2;
@@ -14,17 +16,25 @@ public class Entity extends Body {
 	private Vector2f scale;
 	private Texture texture;
 	private Vector3f color;
-	
-	private boolean active;
-	
+		
 	public Entity(Texture texture, Vector2f position, Vector2f scale) {
-		this.getTransform().setTranslation(new Vector2(position.x, position.y));
-		Rectangle rect = new Rectangle(scale.x, scale.y);
-		this.addFixture(rect);
-		this.setMass(MassType.NORMAL);
+		this(texture, position, scale, false);
+	}
+	
+	public Entity(Texture texture, Vector2f position, Vector2f scale, boolean circle) {
+		this.getTransform().setTranslation(new Vector2((double) position.x, (double) position.y));
 		this.scale = scale;
 		this.texture = texture;
-		this.angularVelocity = 0.0f;
+		if (circle) {
+			Circle circ = Geometry.createCircle((double) (scale.x/2));
+			circ.translate(0, 0);
+			addFixture(circ);
+		} else {
+			Rectangle rect = Geometry.createRectangle((double) scale.x, (double) scale.y);
+			rect.translate(scale.x/2, 0);
+			addFixture(rect);
+		}
+		this.setMass(MassType.NORMAL);
 	}
 	
 	public void update(double delta) {
@@ -53,13 +63,5 @@ public class Entity extends Body {
 
 	public void setColor(Vector3f color) {
 		this.color = color;
-	}
-
-	public boolean isActive() {
-		return active;
-	}
-
-	public void setActive(boolean active) {
-		this.active = active;
 	}
 }

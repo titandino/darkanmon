@@ -1,6 +1,6 @@
 package com.htm.game.level.impl;
 
-import org.dyn4j.geometry.Vector2;
+import org.dyn4j.geometry.MassType;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
@@ -43,23 +43,10 @@ public class MainMenu extends Level {
 		for (int i = 0;i < 10;i++) {
 			int size = Util.random(15, 40);
 			Entity starEnt = new Entity(star, new Vector2f(Util.random(20, 800), Util.random(110, 300)), new Vector2f(size, size));
+			starEnt.setMassType(MassType.INFINITE);
 			starEnt.setAngularVelocity(Util.random(1, 4));
-			addEntity(starEnt);
+			addEntity(starEnt, true);
 		}
-		
-		Entity h1 = new Entity(aabb, new Vector2f(100, 300), new Vector2f(50, 50));
-		Entity h2 = new Entity(aabb, new Vector2f(400, 300), new Vector2f(50, 50));
-		h1.setLinearVelocity(new Vector2(40, 0.0));
-		h2.setLinearVelocity(new Vector2(-40, 0.0));
-		addEntity(h1, true);
-		addEntity(h2, true);
-		
-		Entity v1 = new Entity(aabb, new Vector2f(500, 100), new Vector2f(50, 50));
-		Entity v2 = new Entity(aabb, new Vector2f(500, 400), new Vector2f(50, 50));
-		v1.setLinearVelocity(new Vector2(0.0, 20));
-		v2.setLinearVelocity(new Vector2(0.0, -20));
-		addEntity(v1, true);
-		addEntity(v2, true);
 
 		addText(hereToMars);
 		addEntity(play);

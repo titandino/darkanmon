@@ -2,7 +2,7 @@ package com.htm;
 
 import org.lwjgl.opengl.Display;
 import com.htm.game.Game;
-import com.htm.game.level.impl.MainMenu;
+import com.htm.game.level.impl.Tutorial;
 
 public class Main {
 
@@ -26,7 +26,7 @@ public class Main {
 	}
 	
 	public static void initialize() {
-		game = new Game(WIDTH, HEIGHT, "Here To Mars", new MainMenu());
+		game = new Game(WIDTH, HEIGHT, "Here To Mars", new Tutorial());
 	}
 
 	public static void update(double delta) {
