@@ -4,7 +4,6 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import com.htm.Main;
-import com.htm.game.collision.AABB;
 import com.htm.game.level.Level;
 import com.htm.game.object.Entity;
 import com.htm.game.object.Text;
@@ -53,8 +52,6 @@ public class MainMenu extends Level {
 		h2.setVelocity(new Vector2f(-40, 0));
 		addEntity(h1);
 		addEntity(h2);
-		new AABB(h1);
-		new AABB(h2);
 		
 		Entity v1 = new Entity(aabb, new Vector2f(500, 100), new Vector2f(50, 50));
 		Entity v2 = new Entity(aabb, new Vector2f(500, 400), new Vector2f(50, 50));
@@ -62,8 +59,6 @@ public class MainMenu extends Level {
 		v2.setVelocity(new Vector2f(0, -20));
 		addEntity(v1);
 		addEntity(v2);
-		new AABB(v1);
-		new AABB(v2);
 
 		addText(hereToMars);
 		addEntity(play);

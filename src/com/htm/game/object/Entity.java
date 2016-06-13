@@ -3,7 +3,6 @@ package com.htm.game.object;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
-import com.htm.game.collision.Collider;
 import com.htm.graphic.texture.Texture;
 
 public class Entity {
@@ -14,7 +13,6 @@ public class Entity {
 	private Texture texture;
 	private Vector3f color;
 	
-	private Collider collider;
 	private boolean active;
 	
 	private Vector2f velocity;
@@ -99,13 +97,5 @@ public class Entity {
 
 	public void setActive(boolean active) {
 		this.active = active;
-	}
-
-	public Collider getCollider() {
-		return collider;
-	}
-
-	public void setCollider(Collider collider) {
-		this.collider = collider;
 	}
 }
