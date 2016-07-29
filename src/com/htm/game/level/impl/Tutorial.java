@@ -1,7 +1,6 @@
 package com.htm.game.level.impl;
 
 import org.dyn4j.dynamics.Force;
-import org.dyn4j.dynamics.World;
 import org.dyn4j.geometry.MassType;
 import org.dyn4j.geometry.Vector2;
 import org.lwjgl.input.Keyboard;
