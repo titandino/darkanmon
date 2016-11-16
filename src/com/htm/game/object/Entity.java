@@ -27,11 +27,11 @@ public class Entity extends Body {
 		this.texture = texture;
 		if (circle) {
 			Circle circ = Geometry.createCircle((double) (scale.x/2));
-			circ.translate(0, 0);
+			//circ.translate(0, 0);
 			addFixture(circ);
 		} else {
 			Rectangle rect = Geometry.createRectangle((double) scale.x, (double) scale.y);
-			rect.translate(scale.x/2, 0);
+			//rect.translate(0, 0);
 			addFixture(rect);
 		}
 		this.setMass(MassType.NORMAL);
