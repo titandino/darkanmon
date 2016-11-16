@@ -27,13 +27,13 @@ public class Tutorial extends Level {
 
 	@Override
 	public void init() {
-		setGravity(new Vector2(0, 90.8));
+		setGravity(new Vector2(0, 9.8));
 		
 		bgTex = TextureLoader.getTexture("tutorialbg.png");
 		star = TextureLoader.getTexture("star2.png");
 		platTex = TextureLoader.getTexture("debug.png");
 		bg = new Entity(bgTex, new Vector2f(0.0f, 0.0f), new Vector2f(800.0f, 600.0f));
-		//addEntity(bg);
+		addEntity(bg);
 		
 		player = new Entity(star, new Vector2f(100.0f, 450.0f), new Vector2f(50f, 50f), true);
 		player.setColor(new Vector3f(0, 255, 0));
@@ -63,8 +63,7 @@ public class Tutorial extends Level {
 			player.applyTorque(50000);
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
-			System.out.println("memes");
-			player.applyForce(new Force(0.0, -500));
+			player.applyForce(new Force(0.0, -5000));
 		}
 	}
 

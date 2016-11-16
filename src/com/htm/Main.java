@@ -12,14 +12,16 @@ public class Main {
 	public static Game game;
 
 	public static void main(String[] args) {
-		long lastTime = System.nanoTime();
+		long lastTime;
 		double delta = 0;
 		initialize();
+		lastTime = System.nanoTime();
 		while (!Display.isCloseRequested()) {
 			long curr = System.nanoTime();
 			delta = (curr - lastTime) / 1000000000.0;
 			lastTime = curr;
 			update(delta);
+			Display.setTitle("Here To Mars (" + Double.toString(delta) + ")");
 			render();
 		}
 		finish();
