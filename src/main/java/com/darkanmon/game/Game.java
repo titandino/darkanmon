@@ -4,6 +4,8 @@ import static org.lwjgl.opengl.GL11.*;
 
 import org.lwjgl.util.vector.Matrix4f;
 
+import com.darkanmon.base.Mouse;
+import com.darkanmon.base.Window;
 import com.darkanmon.game.level.Level;
 import com.darkanmon.graphic.Renderer;
 import com.darkanmon.graphic.TextRenderer;
@@ -21,14 +23,21 @@ public class Game {
 	
 	private Level level;
 	
+	private Window window;
 	private int width;
 	private int height;
 	
-	public Game(int width, int height, Level level) {
-		this.width = width;
-		this.height = height;
+	private static Game singleton;
+	
+	public Game(Window window, Level level) {
+		if (singleton != null)
+			throw new Error("Game instance has already been initialized.");
+		this.window = window;
+		this.width = window.getWidth();
+		this.height = window.getHeight();
 		setLevel(level);
 		init();
+		singleton = this;
 	}
 	
 	public void init() {
@@ -56,14 +65,19 @@ public class Game {
 		textRenderer.loadFont("sans.ttf", 20);
 	}
 	
-	public void update(double delta) {
+	public final void input() {
+		window.updateInputs();
+	}
+	
+	public final void update(double delta) {
 		if (level != null)
 			level._update(delta);
 	}
 	
-	public void render() {
+	public final void render() {
 		if (level != null)
 			level.render(renderer, textRenderer);
+		window.postRender();
 	}
 
 	public Level getLevel() {
@@ -76,6 +90,10 @@ public class Game {
 		}
 		this.level = level;
 		this.level.init();
+	}
+	
+	public void finish() {
+		window.close();
 	}
 
 	public Renderer getRenderer() {
@@ -108,5 +126,17 @@ public class Game {
 
 	public Shader getTextShader() {
 		return textShader;
+	}
+	
+	public static Game get() {
+		return singleton;
+	}
+	
+	public static Mouse getMouse() {
+		return singleton.window.getMouse();
+	}
+
+	public static Window getWindow() {
+		return singleton.window;
 	}
 }

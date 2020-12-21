@@ -2,6 +2,7 @@ package com.darkanmon.utils;
 
 import java.util.Random;
 
+import org.dyn4j.geometry.Vector2;
 import org.lwjgl.util.vector.Matrix4f;
 
 public class Util {
@@ -46,6 +47,12 @@ public class Util {
 		m.m30 = tx;
 		m.m31 = ty;
 		m.m32 = tz;
+	}
+	
+	public static boolean pointToRectangle(Vector2 point, Vector2 rect, double width, double height) {
+		double left = rect.x; double right = rect.x+width;
+		double top = rect.y; double bottom = rect.y+height;
+		return !(point.x <= left || point.x >= right || point.y <= top || point.y >= bottom);
 	}
 
 }
