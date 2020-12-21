@@ -4,6 +4,7 @@ import org.dyn4j.geometry.MassType;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
+import com.darkanmon.base.input.Key;
 import com.darkanmon.game.Game;
 import com.darkanmon.game.level.Level;
 import com.darkanmon.game.object.Entity;
@@ -23,7 +24,7 @@ public class MainMenu extends Level {
 	public Texture star;
 	public Texture aabb;
 	
-	public Text hereToMars;
+	public Text title;
 				
 	float r = 0.0f;
 	float g = 0.0f;
@@ -35,8 +36,8 @@ public class MainMenu extends Level {
 		bgTex = TextureLoader.getTexture("mainmenubg.png");
 		star = TextureLoader.getTexture("star.png");
 		aabb = TextureLoader.getTexture("aabbtest.png");
-		hereToMars = new Text("Darkanmon", new Vector2f(100.0f, 40.0f), 100, new Vector3f(0.0f, 1.0f, 0.0f));
-		bg = new Entity(bgTex, new Vector2f(0.0f, 0.0f), new Vector2f(800.0f, 600.0f));
+		title = new Text("Darkanmon", new Vector2f(100.0f, 40.0f), 100, new Vector3f(0.0f, 1.0f, 0.0f));
+		bg = new Entity(bgTex, new Vector2f(0.0f, 0.0f), new Vector2f(1600.0f, 900.0f));
 		play = new Entity(playTex, new Vector2f(150.0f, 200.0f), new Vector2f(128.0f, 60.0f));
 		addEntity(bg);
 		for (int i = 0;i < 10;i++) {
@@ -47,13 +48,13 @@ public class MainMenu extends Level {
 			addEntity(starEnt, true);
 		}
 
-		addText(hereToMars);
+		addText(title);
 		addEntity(play);
 	}
 
 	@Override
 	public void update(double delta) {
-		if (Game.getMouse().colliding(play) && Game.getMouse().clicked(0)) {
+		if (Game.getMouse().colliding(play) && Game.getMouse().clicked(Key.M_LEFT)) {
 			Game.get().setLevel(new Tutorial());
 		}
 		
@@ -68,7 +69,7 @@ public class MainMenu extends Level {
 		if (b > 1.0f)
 			b = 0;
 		
-		hereToMars.setColor(new Vector3f(r, g, b));
+		title.setColor(new Vector3f(r, g, b));
 	}
 	
 	@Override

@@ -1,4 +1,4 @@
-package com.darkanmon.base;
+package com.darkanmon.base.input;
 
 public enum KeyState {
 	PRESSED,

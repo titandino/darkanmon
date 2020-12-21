@@ -2,7 +2,7 @@ package com.darkanmon;
 
 import com.darkanmon.base.Window;
 import com.darkanmon.game.Game;
-import com.darkanmon.game.level.impl.Tutorial;
+import com.darkanmon.game.level.impl.MainMenu;
 
 public class Main {
 
@@ -26,7 +26,9 @@ public class Main {
 	}
 	
 	public static void initialize() {
-		new Game(new Window("Darkanmon", WIDTH, HEIGHT), new Tutorial());
+		Window gameWindow = new Window("Darkanmon", WIDTH, HEIGHT);
+		gameWindow.init();
+		new Game(gameWindow, new MainMenu());
 	}
 	
 	public static void input() {

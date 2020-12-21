@@ -4,8 +4,9 @@ import static org.lwjgl.opengl.GL11.*;
 
 import org.lwjgl.util.vector.Matrix4f;
 
-import com.darkanmon.base.Mouse;
 import com.darkanmon.base.Window;
+import com.darkanmon.base.input.Keyboard;
+import com.darkanmon.base.input.Mouse;
 import com.darkanmon.game.level.Level;
 import com.darkanmon.graphic.Renderer;
 import com.darkanmon.graphic.TextRenderer;
@@ -134,6 +135,10 @@ public class Game {
 	
 	public static Mouse getMouse() {
 		return singleton.window.getMouse();
+	}
+	
+	public static Keyboard getKeyboard() {
+		return singleton.window.getKeyboard();
 	}
 
 	public static Window getWindow() {

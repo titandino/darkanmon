@@ -12,6 +12,9 @@ import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.system.MemoryStack;
 
+import com.darkanmon.base.input.Keyboard;
+import com.darkanmon.base.input.Mouse;
+
 public class Window {
 
 	private long windowId;
@@ -19,6 +22,7 @@ public class Window {
 	private int width;
 	private int height;
 	private Mouse mouse;
+	private Keyboard keyboard;
 	private GLFWVidMode monitor;
 
 	public Window(String name, int width, int height) {
@@ -78,6 +82,7 @@ public class Window {
 		GL.createCapabilities();
 		
 		mouse = new Mouse(this);
+		keyboard = new Keyboard(this);
 	}
 
 	public boolean shouldClose() {
@@ -90,6 +95,8 @@ public class Window {
 	
 	public void postRender() {
 		glfwSwapBuffers(windowId);
+		mouse.clearInputs();
+		keyboard.clearInputs();
         glfwPollEvents();
 	}
 	
@@ -133,6 +140,10 @@ public class Window {
 
 	public Mouse getMouse() {
 		return mouse;
+	}
+
+	public Keyboard getKeyboard() {
+		return keyboard;
 	}
 
 }
