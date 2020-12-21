@@ -7,12 +7,15 @@ import org.lwjgl.glfw.GLFWKeyCallback;
 import com.darkanmon.base.Window;
 
 public class Keyboard extends InputHandler {
-	
-	private GLFWKeyCallback keyCallback;
-	
+		
 	public Keyboard(Window window) {
-		glfwSetKeyCallback(window.getId(), keyCallback = GLFWKeyCallback.create((windowId, key, scancode, action, mods) -> {
-			
+		glfwSetKeyCallback(window.getId(), GLFWKeyCallback.create((windowId, keyCode, scancode, action, mods) -> {
+			Key key = Key.forCode(keyCode);
+			if (key == null) {
+				System.out.println("Unmapped keyboard key: " + keyCode);
+				return;
+			}
+			setState(key, action == 0 ? KeyState.RELEASED : KeyState.PRESSED);
 		}));
 	}
 

@@ -15,14 +15,13 @@ public class Mouse extends InputHandler {
 
 	private int x, y;
 
-	private GLFWMouseButtonCallback mouseCallback;
 	private DoubleBuffer mouseXBuffer;
 	private DoubleBuffer mouseYBuffer;
 	
 	public Mouse(Window window) {
 		mouseXBuffer = BufferUtils.createDoubleBuffer(1);
 		mouseYBuffer = BufferUtils.createDoubleBuffer(1);
-		glfwSetMouseButtonCallback(window.getId(), mouseCallback = GLFWMouseButtonCallback.create((windowId, button, action, mods) -> {
+		glfwSetMouseButtonCallback(window.getId(), GLFWMouseButtonCallback.create((windowId, button, action, mods) -> {
 			Key key = Key.forCode(button);
 			if (key == null) {
 				System.out.println("Unmapped mouse key: " + button);

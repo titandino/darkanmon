@@ -21,7 +21,6 @@ public abstract class InputHandler {
 			timePressed.remove(key);
 		}
 		inputs.put(key, state);
-		System.out.println("State change: " + key + ", " + state);
 	}
 	
 	public KeyState getState(Key key) {
