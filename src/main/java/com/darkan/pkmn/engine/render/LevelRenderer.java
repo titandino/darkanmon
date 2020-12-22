@@ -12,12 +12,6 @@ import com.darkan.pkmn.engine.level.Level;
 import com.darkan.pkmn.engine.util.Util;
 import com.darkan.pkmn.engine.util.Vector2f;
 
-/**
- * @GLSurfaceView renderer for the level.
- * Also has all the level logic within it as the
- * @onDrawFrame method is sort of the only loop
- * mechanism
- */
 public class LevelRenderer {
 	//Shader, texture manager, mesh manager, and FBO to render the level to
 	private GLWindow window;
@@ -30,7 +24,7 @@ public class LevelRenderer {
 
 	//Device width and height
 	private static int SCREEN_WIDTH = 800;
-	private static  int SCREEN_HEIGHT = 600;
+	private static int SCREEN_HEIGHT = 600;
 
 	//Separate entity to render the FBO to on the main screen
 	//downsized and rotated to best fit screen
@@ -43,7 +37,6 @@ public class LevelRenderer {
 	 * @param context The LevelActivity's context.
 	 */
 	public LevelRenderer(Level level, int width, int height) {
-		super();
 		SCREEN_WIDTH = width;
 		SCREEN_HEIGHT = height;
 		this.level = level;
