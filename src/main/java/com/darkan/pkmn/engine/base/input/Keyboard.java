@@ -1,0 +1,22 @@
+package com.darkan.pkmn.engine.base.input;
+
+import static org.lwjgl.glfw.GLFW.*;
+
+import org.lwjgl.glfw.GLFWKeyCallback;
+
+import com.darkan.pkmn.engine.base.GLWindow;
+
+public class Keyboard extends InputHandler {
+		
+	public Keyboard(GLWindow window) {
+		glfwSetKeyCallback(window.getId(), GLFWKeyCallback.create((windowId, keyCode, scancode, action, mods) -> {
+			Key key = Key.forCode(keyCode);
+			if (key == null) {
+				System.out.println("Unmapped keyboard key: " + keyCode);
+				return;
+			}
+			setState(key, action == 0 ? KeyState.RELEASED : KeyState.PRESSED);
+		}));
+	}
+
+}

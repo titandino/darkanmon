@@ -39,8 +39,6 @@ dependencies {
 	implementation "org.lwjgl:lwjgl-opengl"
 	implementation "org.lwjgl:lwjgl-stb"
 	
-	// https://mvnrepository.com/artifact/org.dyn4j/dyn4j
-	compile group: 'org.dyn4j', name: 'dyn4j', version: '4.0.2'
 	// https://mvnrepository.com/artifact/org.lwjgl/lwjgl-util
 	compile group: 'org.lwjgl', name: 'lwjgl-util', version: '2.7.1'
 		
