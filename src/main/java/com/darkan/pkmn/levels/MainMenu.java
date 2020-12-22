@@ -34,10 +34,13 @@ public class MainMenu extends Level {
 
     @Override
     public void update(float delta) {
-    	if (Window.getMouse().clicked(Key.M_LEFT))
-    		System.out.println("Clicked: " + Window.getMouse().getX() + ", " + Window.getMouse().getY() + " - " + playButton.getPosition().x + ", " + playButton.getPosition().y);
     	if (Window.getMouse().colliding(playButton) && Window.getMouse().clicked(Key.M_LEFT))
     		GameManager.get().setLevel(new Game());
+    }
+    
+    @Override
+    public void onWindowResize() {
+    	playButton.setPosition(new Vector2f((Window.get().getWidth() / 2), 150));
     }
 
     @Override

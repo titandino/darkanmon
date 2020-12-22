@@ -98,4 +98,11 @@ public class GameManager {
 	public static Resolution getResolution() {
 		return singleton.resolution;
 	}
+
+	public void notifyWindowResize() {
+		if (entityRenderer != null && currentLevel != null) {
+			entityRenderer.resizeScreen(currentLevel);
+			currentLevel.onWindowResize();
+		}
+	}
 }

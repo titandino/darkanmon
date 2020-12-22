@@ -5,6 +5,7 @@ import org.lwjgl.glfw.GLFWKeyCallbackI;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.system.MemoryStack;
 
+import com.darkan.pkmn.engine.GameManager;
 import com.darkan.pkmn.engine.base.input.Keyboard;
 import com.darkan.pkmn.engine.base.input.Mouse;
 
@@ -41,6 +42,13 @@ public class Window {
 		id = glfwCreateWindow(size.getWidth(), size.getHeight(), name, NULL, NULL);
 		if (id == NULL)
 			throw new RuntimeException("Failed to create the GLFW window");
+		
+		glfwSetWindowSizeCallback(id, (long window, int width, int height) -> {
+			this.size = new Resolution(width, height);
+			if (GameManager.get() != null)
+				GameManager.get().notifyWindowResize();
+		});
+		
 		mouse = new Mouse(this);
 		keyboard = new Keyboard(this);
 		singleton = this;

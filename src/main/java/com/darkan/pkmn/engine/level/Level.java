@@ -50,6 +50,10 @@ public abstract class Level {
 
     }
     
+    public void onWindowResize() {
+    	
+    }
+    
     public final void input() {
     	entityRenderer.getWindow().updateInputs();
     }
