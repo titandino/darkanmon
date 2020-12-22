@@ -19,11 +19,11 @@ void main(void) {
     if (color.x < 1.0f) {
         finalColor = mix(color, finalColor, 0.5f);
     }
-    if (height != 1000) {
-        vec2 position = gl_FragCoord.xy / vec2(3840.0f, 2160.0f);
-        vec4 color = texture(heightMap, vec2(position.x, abs(position.y - 1.0f)));
-        if (float(height)/255.0f < color.r) {
-            finalColor = vec4(0.0f, 0.0f, 0.0f, 0.0f);
-        }
-    }
+    //if (height != 1000) {
+    //    vec2 position = gl_FragCoord.xy / vec2(3840.0f, 2160.0f);
+    //    vec4 color = texture(heightMap, vec2(position.x, abs(position.y - 1.0f)));
+    //    if (float(height)/255.0f < color.r) {
+    //        finalColor = vec4(0.0f, 0.0f, 0.0f, 0.0f);
+    //    }
+    //}
 }

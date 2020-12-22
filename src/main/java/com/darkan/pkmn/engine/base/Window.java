@@ -15,17 +15,19 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 
 import java.nio.IntBuffer;
 
-public class GLWindow {
+public class Window {
 	private long id;
-	private int width;
-	private int height;
+	private Resolution size;
 
 	private Mouse mouse;
 	private Keyboard keyboard;
+	
+	private static Window singleton;
 
-	public GLWindow(String name, int width, int height) {
-		this.width = width;
-		this.height = height;
+	public Window(String name, Resolution size) {
+		if (singleton != null)
+			throw new Error("A game window has already been created.");
+		this.size = size;
 		
 		GLFWErrorCallback.createPrint(System.err).set();
 		
@@ -36,11 +38,12 @@ public class GLWindow {
 		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 
-		id = glfwCreateWindow(width, height, name, NULL, NULL);
+		id = glfwCreateWindow(size.getWidth(), size.getHeight(), name, NULL, NULL);
 		if (id == NULL)
 			throw new RuntimeException("Failed to create the GLFW window");
 		mouse = new Mouse(this);
 		keyboard = new Keyboard(this);
+		singleton = this;
 	}
 	
 	public void updateInputs() {
@@ -104,23 +107,31 @@ public class GLWindow {
 		glfwSetErrorCallback(null).free();
 	}
 
-	public int getHeight() {
-		return height;
+	public Resolution getSize() {
+		return size;
 	}
 
-	public int getWidth() {
-		return width;
-	}
-	
 	public long getId() {
 		return id;
 	}
 	
-	public Mouse getMouse() {
-		return mouse;
+	public static Window get() {
+		return singleton;
+	}
+	
+	public static Mouse getMouse() {
+		return singleton.mouse;
 	}
 
-	public Keyboard getKeyboard() {
-		return keyboard;
+	public static Keyboard getKeyboard() {
+		return singleton.keyboard;
+	}
+
+	public int getWidth() {
+		return size.getWidth();
+	}
+	
+	public int getHeight() {
+		return size.getHeight();
 	}
 }

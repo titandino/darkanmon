@@ -6,8 +6,8 @@ import java.nio.DoubleBuffer;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFWMouseButtonCallback;
 
-import com.darkan.pkmn.engine.Entity;
-import com.darkan.pkmn.engine.base.GLWindow;
+import com.darkan.pkmn.engine.base.Window;
+import com.darkan.pkmn.engine.entity.Entity;
 import com.darkan.pkmn.engine.util.Util;
 import com.darkan.pkmn.engine.util.Vector2f;
 
@@ -18,7 +18,7 @@ public class Mouse extends InputHandler {
 	private DoubleBuffer mouseXBuffer;
 	private DoubleBuffer mouseYBuffer;
 	
-	public Mouse(GLWindow window) {
+	public Mouse(Window window) {
 		mouseXBuffer = BufferUtils.createDoubleBuffer(1);
 		mouseYBuffer = BufferUtils.createDoubleBuffer(1);
 		glfwSetMouseButtonCallback(window.getId(), GLFWMouseButtonCallback.create((windowId, button, action, mods) -> {
@@ -51,13 +51,13 @@ public class Mouse extends InputHandler {
 		return Util.pointToRectangle(new Vector2f(x, y), entity.getPosition(), entity.getScale().x, entity.getScale().y);
 	}
 
-	public void update(GLWindow window) {
+	public void update(Window window) {
 		//glfwSetInputMode(window.getId(), GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
 		glfwGetCursorPos(window.getId(), mouseXBuffer, mouseYBuffer);
 
 		x = (int) mouseXBuffer.get(0);
-		y = (int) mouseYBuffer.get(0);
+		y = Window.get().getHeight() - (int) mouseYBuffer.get(0);
 	}
 
 }

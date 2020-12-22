@@ -94,8 +94,8 @@ public class Util {
     }
     
     public static boolean pointToRectangle(Vector2f point, Vector2f rect, double width, double height) {
-		double left = rect.x; double right = rect.x+width;
-		double top = rect.y; double bottom = rect.y+height;
+		double left = rect.x-width/2; double right = rect.x+width/2;
+		double top = rect.y-height/2; double bottom = rect.y+height/2;
 		return !(point.x <= left || point.x >= right || point.y <= top || point.y >= bottom);
 	}
 }

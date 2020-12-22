@@ -1,13 +1,13 @@
-package com.darkan.pkmn.engine;
+package com.darkan.pkmn.engine.entity;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.*;
 
 import java.awt.Color;
 
+import com.darkan.pkmn.engine.render.EntityRenderer;
 import com.darkan.pkmn.engine.render.FBO;
 import com.darkan.pkmn.engine.render.Mesh;
-import com.darkan.pkmn.engine.render.Shader;
 import com.darkan.pkmn.engine.render.Texture;
 import com.darkan.pkmn.engine.util.Vector2f;
 
@@ -74,26 +74,26 @@ public class Entity {
      * Override for adding extra render features.
      * @param shader Shader to bind when rendering.
      */
-    public void render(Shader shader) { }
+    public void render(EntityRenderer renderer) { }
 
     /**
      * Render the entity using the shader provided.
      * @param shader Shader to bind when rendering.
      */
-    public final void _render(Shader shader) {
+    public final void _render(EntityRenderer renderer) {
         mesh.bind();
-        texture.bind(shader.getUniformLocation("tex"));
+        texture.bind(renderer.getShader().getUniformLocation("tex"));
 
         //Flip y axis of texture coordinates if it is an FBO as a texture
-        glUniform1i(shader.getUniformLocation("flip"), texFbo ? 1 : 0);
-        glUniform1i(shader.getUniformLocation("height"), height);
+        glUniform1i(renderer.getShader().getUniformLocation("flip"), texFbo ? 1 : 0);
+        glUniform1i(renderer.getShader().getUniformLocation("height"), height);
 
-        glUniform4fv(shader.getUniformLocation("color"), new float[] { color == null ? 2.0f : color.getRed() / 255f, color == null ? 2.0f : color.getGreen() / 255f, color == null ? 2.0f : color.getBlue() / 255f, color == null ? 2.0f : color.getAlpha() / 255f });
+        glUniform4fv(renderer.getShader().getUniformLocation("color"), new float[] { color == null ? 2.0f : color.getRed() / 255f, color == null ? 2.0f : color.getGreen() / 255f, color == null ? 2.0f : color.getBlue() / 255f, color == null ? 2.0f : color.getAlpha() / 255f });
 
         //Pass transformation to shader
-        glUniform2fv(shader.getUniformLocation("translation"), new float[] { position.x, position.y });
-        glUniform1f(shader.getUniformLocation("rotation"), rotation);
-        glUniform2fv(shader.getUniformLocation("scale"), new float[] { scale.x, scale.y });
+        glUniform2fv(renderer.getShader().getUniformLocation("translation"), new float[] { position.x, position.y });
+        glUniform1f(renderer.getShader().getUniformLocation("rotation"), rotation);
+        glUniform2fv(renderer.getShader().getUniformLocation("scale"), new float[] { scale.x, scale.y });
 
         //Draw the entity
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
