@@ -10,6 +10,7 @@ public class FontMeshLoader {
 
 	protected static final double LINE_HEIGHT = 0.03f;
 	protected static final int SPACE_ASCII = 32;
+	protected static final int FONT_SIZE = 12;
 
 	private MetaFile metaData;
 
@@ -26,18 +27,18 @@ public class FontMeshLoader {
 	private List<Line> createStructure(Text text) {
 		char[] chars = text.getText().toCharArray();
 		List<Line> lines = new ArrayList<Line>();
-		Line currentLine = new Line(metaData.getSpaceWidth(), text.getFontSize(), text.getMaxLineLen());
-		Word currentWord = new Word(text.getFontSize());
+		Line currentLine = new Line(metaData.getSpaceWidth(), FONT_SIZE, text.getMaxLineLen());
+		Word currentWord = new Word(FONT_SIZE);
 		for (char c : chars) {
 			int ascii = (int) c;
 			if (ascii == SPACE_ASCII) {
 				boolean added = currentLine.attemptToAddWord(currentWord);
 				if (!added) {
 					lines.add(currentLine);
-					currentLine = new Line(metaData.getSpaceWidth(), text.getFontSize(), text.getMaxLineLen());
+					currentLine = new Line(metaData.getSpaceWidth(), FONT_SIZE, text.getMaxLineLen());
 					currentLine.attemptToAddWord(currentWord);
 				}
-				currentWord = new Word(text.getFontSize());
+				currentWord = new Word(FONT_SIZE);
 				continue;
 			}
 			Character character = metaData.getCharacter(ascii);
@@ -51,7 +52,7 @@ public class FontMeshLoader {
 		boolean added = currentLine.attemptToAddWord(currentWord);
 		if (!added) {
 			lines.add(currentLine);
-			currentLine = new Line(metaData.getSpaceWidth(), text.getFontSize(), text.getMaxLineLen());
+			currentLine = new Line(metaData.getSpaceWidth(), FONT_SIZE, text.getMaxLineLen());
 			currentLine.attemptToAddWord(currentWord);
 		}
 		lines.add(currentLine);
@@ -69,14 +70,14 @@ public class FontMeshLoader {
 			}
 			for (Word word : line.getWords()) {
 				for (Character letter : word.getCharacters()) {
-					addVerticesForCharacter(curserX, curserY, letter, text.getFontSize(), vertices);
+					addVerticesForCharacter(curserX, curserY, letter, FONT_SIZE, vertices);
 					addTexCoords(textureCoords, letter.getxTextureCoord(), letter.getyTextureCoord(), letter.getXMaxTextureCoord(), letter.getYMaxTextureCoord());
-					curserX += letter.getxAdvance() * text.getFontSize();
+					curserX += letter.getxAdvance() * FONT_SIZE;
 				}
-				curserX += metaData.getSpaceWidth() * text.getFontSize();
+				curserX += metaData.getSpaceWidth() * FONT_SIZE;
 			}
 			curserX = 0;
-			curserY += LINE_HEIGHT * text.getFontSize();
+			curserY += LINE_HEIGHT * FONT_SIZE;
 		}
 		return new Mesh(listToArray(vertices), listToArray(textureCoords));
 	}

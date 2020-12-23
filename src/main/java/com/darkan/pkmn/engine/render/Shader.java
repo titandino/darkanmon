@@ -85,6 +85,7 @@ public class Shader {
 		if (glGetProgrami(handle, GL_LINK_STATUS) == 0) {
 			String error = glGetProgramInfoLog(handle);
 			glDeleteProgram(handle);
+			System.err.println(error);
 			throw new RuntimeException("Error in program linking: " + error);
 		} else
 			return handle;

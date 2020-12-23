@@ -1,12 +1,7 @@
 package com.darkan.pkmn.engine.render;
 
-import static org.lwjgl.opengl.GL11.GL_TRIANGLE_STRIP;
-import static org.lwjgl.opengl.GL11.glDrawArrays;
-import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
-import static org.lwjgl.opengl.GL20.glUniform1f;
-import static org.lwjgl.opengl.GL20.glUniform1i;
-import static org.lwjgl.opengl.GL20.glUniform2fv;
-import static org.lwjgl.opengl.GL20.glUniform4fv;
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL20.*;
 
 import com.darkan.pkmn.engine.Level;
 import com.darkan.pkmn.engine.base.Window;
@@ -20,7 +15,7 @@ public class EntityRenderer extends Renderer {
 
 	@Override
 	public void prepare() {
-		
+
 	}
 	
 	public void render(Level level) {

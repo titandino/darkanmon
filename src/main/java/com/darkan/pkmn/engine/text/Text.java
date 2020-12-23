@@ -10,12 +10,13 @@ import com.darkan.pkmn.engine.util.Vector2f;
 public class Text {
 	
 	private Font font;
-	private float fontSize;
 	private float maxLineLen;
 	private boolean centered;
 	private int numLines;
 	private String text;
 	private Vector2f position;
+    private float rotation;
+    private Vector2f scale;
 	private Color color;
 	private Mesh mesh;
 	
@@ -24,9 +25,9 @@ public class Text {
 		this.text = text;
 		this.position = position;
 		this.color = color;
-		this.fontSize = fontSize;
 		this.maxLineLen = maxLineLen;
 		this.centered = centered;
+		this.scale = new Vector2f(150.0f, 150.0f);
 		this.mesh = font.create(this);
 	}
 	
@@ -49,10 +50,6 @@ public class Text {
 	public Mesh getMesh() {
 		return mesh;
 	}
-	
-	public float getFontSize() {
-		return fontSize;
-	}
 
 	public float getMaxLineLen() {
 		return maxLineLen;
@@ -68,5 +65,13 @@ public class Text {
 
 	public void setNumLines(int numLines) {
 		this.numLines = numLines;
+	}
+
+	public float getRotation() {
+		return rotation;
+	}
+
+	public Vector2f getScale() {
+		return scale;
 	}
 }

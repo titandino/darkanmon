@@ -1,12 +1,13 @@
 #version 330
 
-in vec2 outTexCoords;
+in vec4 texCoord;
 
 out vec4 outColor;
 
-uniform vec3 color;
+uniform vec4 color;
 uniform sampler2D fontAtlas;
 
 void main(void) {
-	outColor = vec4(color, texture(fontAtlas, outTexCoords).a);
+	outColor = texture(fontAtlas, texCoord.xy);
+	outColor = vec4(color.xyz, outColor.a);
 }

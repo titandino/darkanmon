@@ -14,7 +14,7 @@ void main(void) {
         finalColor = texture(tex, vec2(texCoord.x, abs(texCoord.y - 1.0f)));
     else
         finalColor = texture(tex, texCoord.xy);
-    if (color.x < 1.0f) {
+    if (color.x <= 1.0f) {
         finalColor = mix(color, finalColor, 0.5f);
     }
 }
