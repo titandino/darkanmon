@@ -27,7 +27,7 @@ public class Text {
 		this.color = color;
 		this.maxLineLen = maxLineLen;
 		this.centered = centered;
-		this.scale = new Vector2f(150.0f, 150.0f);
+		this.scale = new Vector2f(fontSize * 1.4f, fontSize);
 		this.mesh = font.create(this);
 	}
 	
