@@ -1,4 +1,4 @@
-package com.darkan.pkmn.engine.render;
+package com.darkan.pkmn.engine.gfx.mesh;
 
 import java.util.HashMap;
 

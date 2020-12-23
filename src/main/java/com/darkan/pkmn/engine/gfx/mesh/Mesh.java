@@ -1,4 +1,4 @@
-package com.darkan.pkmn.engine.render;
+package com.darkan.pkmn.engine.gfx.mesh;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -18,7 +18,6 @@ public class Mesh {
     private int vertexVao;
     private int textureVao;
     private boolean loaded;
-    private boolean bound;
 
     /**
      * Creates a mesh with the specified vertices and texture coordinates
@@ -59,8 +58,6 @@ public class Mesh {
      * Binds the mesh for drawing.
      */
     public void bind() {
-        if (bound)
-            return;
         load();
 
         //Use this mesh's vertices in VAO #0
@@ -72,7 +69,12 @@ public class Mesh {
         glBindBuffer(GL_ARRAY_BUFFER, textureVao);
         glEnableVertexAttribArray(1);
         glVertexAttribPointer(1, 2, GL_FLOAT, false, 0, 0);
-        bound = true;
+    }
+    
+    public void unbind() {
+    	glDisableVertexAttribArray(0);
+    	glDisableVertexAttribArray(1);
+    	glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
     /**
@@ -82,9 +84,12 @@ public class Mesh {
         if (!loaded)
             return;
         loaded = false;
-        bound = false;
         glDeleteBuffers(vertexVao);
         glDeleteBuffers(textureVao);
         return;
+    }
+    
+    public int getVertexCount() {
+    	return vertices.length / 2;
     }
 }

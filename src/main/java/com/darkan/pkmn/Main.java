@@ -12,7 +12,7 @@ public class Main {
 	private static GameManager manager;
 
 	public static void main(String[] args) {
-		GameManager.DEBUG = false;
+		GameManager.DEBUG = true;
 
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			public void run() {

@@ -131,6 +131,11 @@ public class Shader {
 		glUseProgram(shaderProgram);
 		return this;
 	}
+	
+	public Shader stop() {
+		glUseProgram(0);
+		return this;
+	}
 
 	/**
 	 * Unload the shader.

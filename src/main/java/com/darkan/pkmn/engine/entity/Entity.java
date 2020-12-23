@@ -1,14 +1,10 @@
 package com.darkan.pkmn.engine.entity;
 
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL20.*;
-
 import java.awt.Color;
 
-import com.darkan.pkmn.engine.render.EntityRenderer;
+import com.darkan.pkmn.engine.gfx.mesh.Mesh;
+import com.darkan.pkmn.engine.gfx.texture.Texture;
 import com.darkan.pkmn.engine.render.FBO;
-import com.darkan.pkmn.engine.render.Mesh;
-import com.darkan.pkmn.engine.render.Texture;
 import com.darkan.pkmn.engine.util.Vector2f;
 
 /**
@@ -27,10 +23,9 @@ public class Entity {
 
     //Texture and texture coordinates
     private Mesh mesh;
-    private Texture texture;
+	private Texture texture;
     private boolean texFbo;
     private Color color;
-    private int height = 0;
 
     public Entity(Vector2f position, float width, float height, Mesh mesh, Texture texture) {
         this(position, new Vector2f(0, 0), width, height, mesh, texture);
@@ -68,35 +63,6 @@ public class Entity {
     public final void _update(float delta) {
         update(delta);
         position = position.add(velocity.scale(delta));
-    }
-
-    /**
-     * Override for adding extra render features.
-     * @param shader Shader to bind when rendering.
-     */
-    public void render(EntityRenderer renderer) { }
-
-    /**
-     * Render the entity using the shader provided.
-     * @param shader Shader to bind when rendering.
-     */
-    public final void _render(EntityRenderer renderer) {
-        mesh.bind();
-        texture.bind(renderer.getShader().getUniformLocation("tex"));
-
-        //Flip y axis of texture coordinates if it is an FBO as a texture
-        glUniform1i(renderer.getShader().getUniformLocation("flip"), texFbo ? 1 : 0);
-        glUniform1i(renderer.getShader().getUniformLocation("height"), height);
-
-        glUniform4fv(renderer.getShader().getUniformLocation("color"), new float[] { color == null ? 2.0f : color.getRed() / 255f, color == null ? 2.0f : color.getGreen() / 255f, color == null ? 2.0f : color.getBlue() / 255f, color == null ? 2.0f : color.getAlpha() / 255f });
-
-        //Pass transformation to shader
-        glUniform2fv(renderer.getShader().getUniformLocation("translation"), new float[] { position.x, position.y });
-        glUniform1f(renderer.getShader().getUniformLocation("rotation"), rotation);
-        glUniform2fv(renderer.getShader().getUniformLocation("scale"), new float[] { scale.x, scale.y });
-
-        //Draw the entity
-        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     }
 
     /**
@@ -155,9 +121,20 @@ public class Entity {
     public void setVelocity(Vector2f velocity) {
         this.velocity = velocity;
     }
+    
+    public Mesh getMesh() {
+		return mesh;
+	}
 
-    public void setHeight(int height) {
-        this.height = height;
-    }
+	public Texture getTexture() {
+		return texture;
+	}
 
+	public boolean isTexFbo() {
+		return texFbo;
+	}
+
+	public Color getColor() {
+		return color;
+	}
 }

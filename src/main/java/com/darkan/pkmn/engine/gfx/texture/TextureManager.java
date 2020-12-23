@@ -1,4 +1,4 @@
-package com.darkan.pkmn.engine.render;
+package com.darkan.pkmn.engine.gfx.texture;
 
 import java.awt.image.BufferedImage;
 import java.awt.Color;

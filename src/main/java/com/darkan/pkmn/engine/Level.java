@@ -1,11 +1,12 @@
-package com.darkan.pkmn.engine.level;
+package com.darkan.pkmn.engine;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.darkan.pkmn.engine.entity.Entity;
-import com.darkan.pkmn.engine.render.FBO;
 import com.darkan.pkmn.engine.render.EntityRenderer;
+import com.darkan.pkmn.engine.render.FBO;
+import com.darkan.pkmn.engine.render.FontRenderer;
 
 /**
  * Class to handle all the logic for a level instance.
@@ -13,8 +14,6 @@ import com.darkan.pkmn.engine.render.EntityRenderer;
  * Created by trent on 4/16/2018.
  */
 public abstract class Level {
-    //Renderer variables
-    private EntityRenderer entityRenderer;
     protected ConcurrentHashMap<Integer, Entity> entities = new ConcurrentHashMap<>();
 
     /**
@@ -32,7 +31,8 @@ public abstract class Level {
      * Handles extra render features on top of the default.
      * @param shader Shader currently bound when called
      */
-    public abstract void render();
+    public abstract void renderExtraEntity(EntityRenderer entityRenderer);
+    public abstract void renderExtraFont(FontRenderer fontRenderer);
 
     /**
      * Method for handing post processing after the primary render
@@ -46,16 +46,16 @@ public abstract class Level {
      * Method to render extra UI elements after the main view is rendered.
      * @param shader Shader currently being used.
      */
-    public void renderUI() {
+    public void renderUIEntity(EntityRenderer entityRenderer) {
+
+    }
+    
+    public void renderUIFont(FontRenderer fontRenderer) {
 
     }
     
     public void onWindowResize() {
     	
-    }
-    
-    public final void input() {
-    	entityRenderer.getWindow().updateInputs();
     }
 
     /**
@@ -72,10 +72,6 @@ public abstract class Level {
                 ent._update(delta);
             }
         }
-    }
-
-    public final void _render() {    	
-        entityRenderer.render(this);
     }
     
     public final void finish() {
@@ -98,14 +94,6 @@ public abstract class Level {
      */
     public void removeEntity(Entity entity) {
         entities.remove(entity.hashCode());
-    }
-
-    public EntityRenderer getEntityRenderer() {
-        return entityRenderer;
-    }
-    
-    public void setEntityRenderer(EntityRenderer renderer) {
-    	this.entityRenderer = renderer;
     }
 
 	public Map<Integer, Entity> getEntities() {

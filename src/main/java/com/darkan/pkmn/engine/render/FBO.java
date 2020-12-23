@@ -10,6 +10,8 @@ import java.nio.ByteOrder;
 
 import javax.imageio.ImageIO;
 
+import com.darkan.pkmn.engine.gfx.texture.Texture;
+
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL30.*;
 
