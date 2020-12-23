@@ -8,7 +8,7 @@ A Java WIP Pokemon clone that aims to encapsulate all the regions and generation
 - [x] Rendering to FBO for resolution, scaling, and post-processing
 - [x] Mesh and Texture managers
 - [x] Keyboard and Mouse Input (Press, Release, Click)
-- [ ] Game state changing via "Levels"
+- [X] Game state changing via "Levels"
 - [ ] 2D/2.5D tile map format for maps
 - [ ] 2D/2.5D movement
 - [ ] Viewport oriented camera prioritizing centering the player
