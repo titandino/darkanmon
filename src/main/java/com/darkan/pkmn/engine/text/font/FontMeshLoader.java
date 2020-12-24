@@ -10,7 +10,7 @@ public class FontMeshLoader {
 
 	protected static final double LINE_HEIGHT = 0.03f;
 	protected static final int SPACE_ASCII = 32;
-	protected static final int FONT_SIZE = 12;
+	protected static final int FONT_SIZE = 50;
 
 	private MetaFile metaData;
 

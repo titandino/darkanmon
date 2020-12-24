@@ -19,6 +19,7 @@ public class Text {
     private Vector2f scale;
 	private Color color;
 	private Mesh mesh;
+	private TextEffects effects;
 	
 	public Text(String text, String fontName, float fontSize, float maxLineLen, Vector2f position, Color color, boolean centered) {
 		this.font = FontManager.getFont(fontName);
@@ -27,8 +28,9 @@ public class Text {
 		this.color = color;
 		this.maxLineLen = maxLineLen;
 		this.centered = centered;
-		this.scale = new Vector2f(fontSize * 1.4f, fontSize);
+		this.scale = new Vector2f(fontSize * 1.5f, fontSize);
 		this.mesh = font.create(this);
+		this.effects = new TextEffects();
 	}
 	
 	public Font getFont() {
@@ -73,5 +75,9 @@ public class Text {
 
 	public Vector2f getScale() {
 		return scale;
+	}
+
+	public TextEffects getEffects() {
+		return effects;
 	}
 }

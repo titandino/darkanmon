@@ -31,9 +31,15 @@ public class FontRenderer extends Renderer {
 		text.getMesh().bind();
 		text.getFont().getTextureAtlas().bind(getShader().getUniformLocation("fontAtlas"));
 
-        //Flip y axis of texture coordinates if it is an FBO as a texture
-        glUniform4fv(getShader().getUniformLocation("color"), new float[] { text.getColor() == null ? 2.0f : text.getColor().getRed() / 255f, text.getColor() == null ? 2.0f : text.getColor().getGreen() / 255f, text.getColor() == null ? 2.0f : text.getColor().getBlue() / 255f, text.getColor() == null ? 2.0f : text.getColor().getAlpha() / 255f });
+        glUniform3fv(getShader().getUniformLocation("color"), new float[] { text.getColor() == null ? 2.0f : text.getColor().getRed() / 255f, text.getColor() == null ? 2.0f : text.getColor().getGreen() / 255f, text.getColor() == null ? 2.0f : text.getColor().getBlue() / 255f });
 		
+        glUniform1f(getShader().getUniformLocation("smoothingWidth"), text.getEffects().getSmoothingWidth());
+        glUniform1f(getShader().getUniformLocation("smoothingEdge"), text.getEffects().getSmoothingEdge());
+        glUniform1f(getShader().getUniformLocation("borderWidth"), text.getEffects().getBorderWidth());
+        glUniform1f(getShader().getUniformLocation("borderEdge"), text.getEffects().getBorderEdge());
+		glUniform3fv(getShader().getUniformLocation("borderColor"), new float[] { text.getEffects().getBorderColor().getRed() / 255f, text.getEffects().getBorderColor().getGreen() / 255f, text.getEffects().getBorderColor().getBlue() / 255f });
+        glUniform2f(getShader().getUniformLocation("borderOffset"), text.getEffects().getBorderOffset().x, text.getEffects().getBorderOffset().y);
+        
         //Pass transformation to shader
         glUniform2fv(getShader().getUniformLocation("translation"), new float[] { text.getPosition().x, text.getPosition().y });
         glUniform1f(getShader().getUniformLocation("rotation"), text.getRotation());
