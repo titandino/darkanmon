@@ -33,7 +33,7 @@ public class GameManager {
 	
 	private long prevFrame = System.currentTimeMillis();
 			
-	public GameManager(Level startLevel, Resolution windowSize, Resolution resolution) {
+	private GameManager(Level startLevel, Resolution windowSize, Resolution resolution) {
 		this.currentLevel = startLevel;
 		this.windowSize = windowSize;
 		this.resolution = resolution;
@@ -43,6 +43,7 @@ public class GameManager {
 		if (singleton != null)
 			throw new IllegalArgumentException("Game manager has already been instantiated.");
 		singleton = new GameManager(startLevel, windowSize, resolution);
+		singleton.init();
 		return singleton;
 	}
 	

@@ -19,8 +19,7 @@ public class Main {
 					manager.shutdown();
 			}
 		});
-		manager = new GameManager(new MainMenu(), windowSize, gameResolution);
-		manager.init();
+		manager = GameManager.create(new MainMenu(), windowSize, gameResolution);
 	}
 
 }
