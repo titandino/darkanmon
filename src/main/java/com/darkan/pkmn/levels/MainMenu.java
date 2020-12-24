@@ -26,7 +26,7 @@ public class MainMenu extends Level {
         Entity background = new Entity(new Vector2f(GameManager.getResolution().getWidth() / 2, GameManager.getResolution().getHeight() / 2), GameManager.getResolution().getWidth(), GameManager.getResolution().getHeight(), MeshManager.defaultMesh(), TextureManager.getTexture("mainmenubg.png"));
         addEntity(background);
     	
-    	testText = new Text("Meme font test", "candara", 100, 3.5f, new Vector2f(GameManager.getResolution().getWidth() / 2, GameManager.getResolution().getHeight() / 2), Color.BLACK, false);
+    	testText = new Text("A q p                          W", "runescape", 100, 3.5f, new Vector2f(GameManager.getResolution().getWidth() / 2, GameManager.getResolution().getHeight() / 2), Color.BLACK, false);
     }
 
 	@Override
