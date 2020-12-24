@@ -31,6 +31,7 @@ public class MainMenu extends Level {
 
 	@Override
 	public void renderExtraEntity(EntityRenderer entityRenderer) {
+		
 	}
 
 	@Override
@@ -45,7 +46,7 @@ public class MainMenu extends Level {
 
 	@Override
 	public void renderUIFont(FontRenderer fontRenderer) {
-		fontRenderer.render(testText);
+		
 	}
 
 	@Override

@@ -18,7 +18,6 @@ import com.darkan.pkmn.engine.util.Vector2f;
 
 public class GameManager {
 	
-	public static boolean DEBUG = false;
 	private static GameManager singleton;
 	
 	private Resolution windowSize;
@@ -35,13 +34,16 @@ public class GameManager {
 	private long prevFrame = System.currentTimeMillis();
 			
 	public GameManager(Level startLevel, Resolution windowSize, Resolution resolution) {
-		if (singleton != null)
-			throw new Error("Game manager has already been instantiated.");
 		this.currentLevel = startLevel;
 		this.windowSize = windowSize;
 		this.resolution = resolution;
-		
-		singleton = this;
+	}
+
+	public static final GameManager create(Level startLevel, Resolution windowSize, Resolution resolution) {
+		if (singleton != null)
+			throw new IllegalArgumentException("Game manager has already been instantiated.");
+		singleton = new GameManager(startLevel, windowSize, resolution);
+		return singleton;
 	}
 	
 	public final void init() {
@@ -96,12 +98,9 @@ public class GameManager {
 	}
 
 	private final void loop() {
-		float millis = System.currentTimeMillis() - prevFrame;
+		float millis = (float) (System.currentTimeMillis() - prevFrame);
 		float delta = millis / 1000f;
-		
-		if (DEBUG)
-			System.out.println("Frame time: " + delta);
-		
+
 		prevFrame = System.currentTimeMillis();
 
 		window.updateInputs();
@@ -146,7 +145,7 @@ public class GameManager {
 		currentLevel = level;
 		
 		currentLevel.init();
-		resizeScreen(currentLevel);
+		resizeScreen();
 	}
 
 	public void shutdown() {
@@ -161,7 +160,7 @@ public class GameManager {
 		return singleton.resolution;
 	}
 	
-	public void resizeScreen(Level level) {
+	public void resizeScreen() {
 		float ratio = (float) window.getWidth() / (float) GameManager.getResolution().getWidth();
 
 		int scaledWidth = (int) (ratio * GameManager.getResolution().getWidth());
@@ -169,12 +168,12 @@ public class GameManager {
 
 		//Calculate the best scale to fit the device's height/width
 		view.setScale(new Vector2f(scaledWidth, scaledHeight));
-		view.setPosition(new Vector2f(window.getWidth()/2, window.getHeight()/2));
+		view.setPosition(new Vector2f(window.getWidth()/2f, window.getHeight()/2f));
 	}
 
 	public void notifyWindowResize() {
 		if (entityRenderer != null && currentLevel != null) {
-			resizeScreen(currentLevel);
+			resizeScreen();
 			currentLevel.onWindowResize();
 		}
 	}
