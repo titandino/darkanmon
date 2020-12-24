@@ -8,7 +8,6 @@ import com.darkan.pkmn.engine.text.font.FontManager;
 import com.darkan.pkmn.engine.util.Vector2f;
 
 public class Text {
-	
 	private Font font;
 	private float maxLineLen;
 	private boolean centered;
@@ -79,5 +78,25 @@ public class Text {
 
 	public TextEffects getEffects() {
 		return effects;
+	}
+	
+	public void setPosition(Vector2f position) {
+		this.position = position;
+	}
+
+	public void setRotation(float rotation) {
+		this.rotation = rotation;
+	}
+
+	public void setScale(Vector2f scale) {
+		this.scale = scale;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+
+	public void setEffects(TextEffects effects) {
+		this.effects = effects;
 	}
 }
