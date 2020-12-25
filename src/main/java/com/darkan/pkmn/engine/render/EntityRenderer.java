@@ -17,8 +17,9 @@ public class EntityRenderer extends Renderer {
 
 	@Override
 	public void prepare(Level level) {
-		glUniformMatrix4fv(getShader().getUniformLocation("camMtx"), false, level.getCamera().getTransform());//TODO get thsi shit into a float buffer plase
-		FloatBuffer.allocate(16)
+		FloatBuffer transform = FloatBuffer.allocate(16);
+		level.getCamera().getTransform().store(transform);
+		glUniformMatrix4fv(getShader().getUniformLocation("camMtx"), false, transform);
 	}
 	
 	public void render(Level level) {
