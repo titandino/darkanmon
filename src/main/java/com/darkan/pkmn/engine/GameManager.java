@@ -13,6 +13,7 @@ import com.darkan.pkmn.engine.gfx.texture.TextureManager;
 import com.darkan.pkmn.engine.render.EntityRenderer;
 import com.darkan.pkmn.engine.render.FBO;
 import com.darkan.pkmn.engine.render.FontRenderer;
+import com.darkan.pkmn.engine.util.Camera;
 import com.darkan.pkmn.engine.util.Util;
 import org.lwjgl.util.vector.Vector2f;
 
@@ -28,6 +29,7 @@ public class GameManager {
 	private Level currentLevel;
 	
 	private FBO fbo;
+	private Camera viewCam;
 	private Entity view;
 	
 	private long prevFrame = System.currentTimeMillis();
@@ -60,6 +62,7 @@ public class GameManager {
 		
 		fbo = new FBO(GameManager.getResolution().getWidth(), GameManager.getResolution().getHeight());
 		view = new Entity(new Vector2f(0, 0), 1, 1, MeshManager.defaultMesh(), fbo);
+		viewCam = new Camera();
 		
 		entityRenderer = new EntityRenderer(window);
 		fontRenderer = new FontRenderer(window);
@@ -86,12 +89,15 @@ public class GameManager {
 		//glOrtho(0, SCREEN_WIDTH, 0, SCREEN_HEIGHT, -1, 1);
 		Util.glOrtho(entityRenderer.getShader(), window.getWidth(), window.getHeight());
 		glViewport(0, 0, window.getWidth(), window.getHeight());
+		viewCam.setOrigin(new Vector2f(window.getWidth() / 2, window.getHeight() / 2));
 		glClear(GL_COLOR_BUFFER_BIT);
 		//Render the fbo to the view entity
+		viewCam.bindUniform(entityRenderer.getShader());
 		entityRenderer.render(view);
 		currentLevel.renderUIEntity(entityRenderer);
 		entityRenderer._end();
 		fontRenderer._prepare(currentLevel);
+		viewCam.bindUniform(fontRenderer.getShader());
 		currentLevel.renderUIFont(fontRenderer);
 		fontRenderer._end();
 	}

@@ -4,6 +4,7 @@ precision mediump float;
 
 const float degToRad = 3.1415926535897932384626433832795f / 180.0f;
 
+uniform mat4 camMtx;
 uniform mat4 ortho;
 uniform vec2 translation;
 uniform float rotation;

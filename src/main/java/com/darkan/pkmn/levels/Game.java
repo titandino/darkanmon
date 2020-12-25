@@ -25,7 +25,7 @@ public class Game extends Level {
     	addEntity(player);
     }
 
-    @Override
+	@Override
     public void update(float delta) {
     	if (Window.getKeyboard().pressed(Key.K_W)) {
     		player.setVelocity(new Vector2f(0f, P_SPEED));

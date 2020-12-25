@@ -15,7 +15,7 @@ public class FontRenderer extends Renderer {
 
 	@Override
 	public void prepare(Level level) {
-		
+		level.getCamera().bindUniform(getShader());
 	}
 
 	@Override

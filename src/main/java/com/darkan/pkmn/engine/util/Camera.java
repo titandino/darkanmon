@@ -1,8 +1,14 @@
 package com.darkan.pkmn.engine.util;
 
+import static org.lwjgl.opengl.GL20.*;
+
+import java.nio.FloatBuffer;
+
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
+
+import com.darkan.pkmn.engine.render.Shader;
 
 public class Camera {
 
@@ -29,6 +35,12 @@ public class Camera {
 		Matrix4f.mul(transform, new Matrix4f().scale(new Vector3f(zoom, zoom, 1f)), transform);
 		Matrix4f.mul(transform, new Matrix4f().translate(position), transform);
 		return transform;
+	}
+	
+	public void bindUniform(Shader shader) {
+		FloatBuffer transform = FloatBuffer.allocate(16);
+		getTransform().store(transform);
+		glUniformMatrix4fv(shader.getUniformLocation("camMtx"), false, transform);
 	}
 	
 	public Vector2f getOrigin() {
@@ -61,9 +73,5 @@ public class Camera {
 
 	public void setZoom(float zoom) {
 		this.zoom = zoom;
-	}
-
-	public void center() {
-		
 	}
 }

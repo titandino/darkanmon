@@ -3,8 +3,6 @@ package com.darkan.pkmn.engine.render;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.*;
 
-import java.nio.FloatBuffer;
-
 import com.darkan.pkmn.engine.Level;
 import com.darkan.pkmn.engine.base.Window;
 import com.darkan.pkmn.engine.entity.Entity;
@@ -17,9 +15,7 @@ public class EntityRenderer extends Renderer {
 
 	@Override
 	public void prepare(Level level) {
-		FloatBuffer transform = FloatBuffer.allocate(16);
-		level.getCamera().getTransform().store(transform);
-		glUniformMatrix4fv(getShader().getUniformLocation("camMtx"), false, transform);
+		level.getCamera().bindUniform(getShader());
 	}
 	
 	public void render(Level level) {
