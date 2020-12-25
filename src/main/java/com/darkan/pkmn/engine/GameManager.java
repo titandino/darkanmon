@@ -14,13 +14,12 @@ import com.darkan.pkmn.engine.render.EntityRenderer;
 import com.darkan.pkmn.engine.render.FBO;
 import com.darkan.pkmn.engine.render.FontRenderer;
 import com.darkan.pkmn.engine.util.Util;
-import com.darkan.pkmn.engine.util.Vector2f;
+import org.lwjgl.util.vector.Vector2f;
 
 public class GameManager {
 	
 	private static GameManager singleton;
 	
-	private Resolution windowSize;
 	private Resolution resolution;
 	
 	private Window window;
@@ -33,24 +32,23 @@ public class GameManager {
 	
 	private long prevFrame = System.currentTimeMillis();
 			
-	private GameManager(Level startLevel, Resolution windowSize, Resolution resolution) {
+	private GameManager(Level startLevel, Resolution resolution) {
 		this.currentLevel = startLevel;
-		this.windowSize = windowSize;
 		this.resolution = resolution;
 	}
 
 	public static final GameManager create(Level startLevel, Resolution windowSize, Resolution resolution) {
 		if (singleton != null)
 			throw new IllegalArgumentException("Game manager has already been instantiated.");
-		singleton = new GameManager(startLevel, windowSize, resolution);
-		singleton.init();
+		singleton = new GameManager(startLevel, resolution);
+		singleton.init(windowSize);
 		return singleton;
 	}
 	
-	public final void init() {
+	public final void init(Resolution windowSize) {
 		System.out.println("Inited LWJGL version " + Version.getVersion() + ".");
 		
-		window = new Window("Level", windowSize);
+		window = new Window("Darkanmon", windowSize);
 		window.center();
 		window.makeCurrent();
 		window.setVsync(true);
@@ -83,7 +81,7 @@ public class GameManager {
 	
 	public void renderView() {
 		//Bind render shader
-		entityRenderer._prepare();
+		entityRenderer._prepare(currentLevel);
 		//Set orthogonal matrix/glViewport to the screen width
 		//glOrtho(0, SCREEN_WIDTH, 0, SCREEN_HEIGHT, -1, 1);
 		Util.glOrtho(entityRenderer.getShader(), window.getWidth(), window.getHeight());
@@ -93,7 +91,7 @@ public class GameManager {
 		entityRenderer.render(view);
 		currentLevel.renderUIEntity(entityRenderer);
 		entityRenderer._end();
-		fontRenderer._prepare();
+		fontRenderer._prepare(currentLevel);
 		currentLevel.renderUIFont(fontRenderer);
 		fontRenderer._end();
 	}
@@ -112,7 +110,7 @@ public class GameManager {
 		 * BIND GAME VIEW FBO
 		 * All rendering after this will be rendered to the game world!
 		 */
-		entityRenderer._prepare();
+		entityRenderer._prepare(currentLevel);
 		fbo.bindFBO();
 		
 		Util.glOrtho(entityRenderer.getShader(), GameManager.getResolution().getWidth(),  GameManager.getResolution().getHeight());
@@ -145,7 +143,7 @@ public class GameManager {
 			currentLevel.finish();
 		currentLevel = level;
 		
-		currentLevel.init();
+		currentLevel._init();
 		resizeScreen();
 	}
 

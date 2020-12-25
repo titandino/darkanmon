@@ -5,11 +5,11 @@ import static org.lwjgl.glfw.GLFW.*;
 import java.nio.DoubleBuffer;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFWMouseButtonCallback;
+import org.lwjgl.util.vector.Vector2f;
 
 import com.darkan.pkmn.engine.base.Window;
 import com.darkan.pkmn.engine.entity.Entity;
 import com.darkan.pkmn.engine.util.Util;
-import com.darkan.pkmn.engine.util.Vector2f;
 
 public class Mouse extends InputHandler {
 

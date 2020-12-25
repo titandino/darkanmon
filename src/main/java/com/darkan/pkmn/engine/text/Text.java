@@ -5,7 +5,7 @@ import java.awt.Color;
 import com.darkan.pkmn.engine.gfx.mesh.Mesh;
 import com.darkan.pkmn.engine.text.font.Font;
 import com.darkan.pkmn.engine.text.font.FontManager;
-import com.darkan.pkmn.engine.util.Vector2f;
+import org.lwjgl.util.vector.Vector2f;
 
 public class Text {
 	private Font font;

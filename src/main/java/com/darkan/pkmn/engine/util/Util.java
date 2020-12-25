@@ -1,5 +1,6 @@
 package com.darkan.pkmn.engine.util;
 
+import org.lwjgl.util.vector.Vector2f;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 

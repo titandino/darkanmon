@@ -17,19 +17,19 @@ public abstract class Renderer {
 		shader = new Shader(vShaderFile, fShaderFile);
 	}
 	
-	public abstract void prepare();
+	public abstract void prepare(Level level);
 	
-	public void _prepare() {
+	public void _prepare(Level level) {
 		shader.use();
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		prepare();
+		prepare(level);
 	}
 	
 	public abstract void render(Level level);
 	
 	public final void _render(Level level) {
-		_prepare();
+		_prepare(level);
 		render(level);
 		_end();
 	}

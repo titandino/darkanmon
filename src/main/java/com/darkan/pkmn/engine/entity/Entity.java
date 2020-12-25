@@ -2,10 +2,11 @@ package com.darkan.pkmn.engine.entity;
 
 import java.awt.Color;
 
+import org.lwjgl.util.vector.Vector2f;
+
 import com.darkan.pkmn.engine.gfx.mesh.Mesh;
 import com.darkan.pkmn.engine.gfx.texture.Texture;
 import com.darkan.pkmn.engine.render.FBO;
-import com.darkan.pkmn.engine.util.Vector2f;
 
 /**
  * Created by trent on 4/6/2018.
@@ -62,7 +63,7 @@ public class Entity {
      */
     public final void _update(float delta) {
         update(delta);
-        position = position.add(velocity.scale(delta));
+        position = Vector2f.add(position, (Vector2f) velocity.scale(delta), position);
     }
 
     /**

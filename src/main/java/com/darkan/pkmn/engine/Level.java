@@ -7,6 +7,7 @@ import com.darkan.pkmn.engine.entity.Entity;
 import com.darkan.pkmn.engine.render.EntityRenderer;
 import com.darkan.pkmn.engine.render.FBO;
 import com.darkan.pkmn.engine.render.FontRenderer;
+import com.darkan.pkmn.engine.util.Camera;
 
 /**
  * Class to handle all the logic for a level instance.
@@ -15,11 +16,17 @@ import com.darkan.pkmn.engine.render.FontRenderer;
  */
 public abstract class Level {
     protected ConcurrentHashMap<Integer, Entity> entities = new ConcurrentHashMap<>();
+    private Camera camera = new Camera();
 
     /**
      * Called when the level is first initialized.
      */
     public abstract void init();
+    
+    public final void _init() {
+    	camera.center();
+    	init();
+    }
 
     /**
      * Handles the extra logic for the level.
@@ -98,5 +105,9 @@ public abstract class Level {
 
 	public Map<Integer, Entity> getEntities() {
 		return entities;
+	}
+
+	public Camera getCamera() {
+		return camera;
 	}
 }
