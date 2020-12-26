@@ -9,6 +9,8 @@ import com.darkan.pkmn.engine.render.FBO;
 import com.darkan.pkmn.engine.render.FontRenderer;
 import com.darkan.pkmn.engine.util.Camera;
 
+import glm.vec._2.Vec2;
+
 /**
  * Class to handle all the logic for a level instance.
  *
@@ -24,7 +26,7 @@ public abstract class Level {
     public abstract void init();
     
     public final void _init() {
-    	//camera.setOrigin(new Vec2(GameManager.getResolution().getWidth()/2, GameManager.getResolution().getHeight()/2));
+    	camera.setOrigin(new Vec2(GameManager.getResolution().getWidth()/2, GameManager.getResolution().getHeight()/2));
     	init();
     }
 

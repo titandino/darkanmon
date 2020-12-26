@@ -6,7 +6,6 @@ import com.darkan.pkmn.engine.gfx.mesh.Mesh;
 import com.darkan.pkmn.engine.gfx.texture.Texture;
 import com.darkan.pkmn.engine.render.FBO;
 
-import glm.Glm;
 import glm.vec._2.Vec2;
 
 /**
@@ -64,7 +63,7 @@ public class Entity {
      */
     public final void _update(float delta) {
         update(delta);
-        position = position.add(Glm.mul(velocity, delta));
+        position = position.add(new Vec2(velocity).mul(delta));
     }
 
     /**

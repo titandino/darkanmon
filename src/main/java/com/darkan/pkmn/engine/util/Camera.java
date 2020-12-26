@@ -30,8 +30,8 @@ public class Camera {
 		Mat4 trans = new Mat4().identity();
 		
 		trans.mul(new Mat4().translate(new Vec3(origin.x, origin.y, 0f)));
-		trans.mul(new Mat4().scale(zoom, zoom, 1.0f));
 		trans.mul(new Mat4().rotate(rotation, new Vec3(0f, 0f, 1f)));
+		trans.mul(new Mat4().scale(zoom, zoom, 1.0f));
 		trans.mul(new Mat4().translate(new Vec3(position.x, position.y, 0f)));
 		
 		return trans;

@@ -1,6 +1,5 @@
 package com.darkan.pkmn.levels;
 
-import com.darkan.pkmn.engine.GameManager;
 import com.darkan.pkmn.engine.Level;
 import com.darkan.pkmn.engine.base.Window;
 import com.darkan.pkmn.engine.base.input.Key;
@@ -14,15 +13,15 @@ import glm.vec._2.Vec2;
 
 public class Game extends Level {
 	
-	private static float P_SPEED = 10.0f;
+	private static float P_SPEED = 25.0f;
 	
 	private Entity player;
 
     @Override
     public void init() {
-    	Entity background = new Entity(new Vec2(GameManager.getResolution().getWidth()/2, GameManager.getResolution().getHeight()/2), 384, 384, MeshManager.defaultMesh(), TextureManager.getTexture("pallet-town-test.png"));
+    	Entity background = new Entity(new Vec2(0, 0), 384, 384, MeshManager.defaultMesh(), TextureManager.getTexture("pallet-town-test.png"));
         addEntity(background);
-    	player = new Entity(new Vec2(GameManager.getResolution().getWidth()/2, GameManager.getResolution().getHeight()/2), 32, 32, MeshManager.defaultMesh(), TextureManager.getTexture("player.png"));
+    	player = new Entity(new Vec2(0, 0), 32, 32, MeshManager.defaultMesh(), TextureManager.getTexture("player.png"));
     	addEntity(player);
     }
 
@@ -39,12 +38,12 @@ public class Game extends Level {
     	} else {
     		player.setVelocity(new Vec2(0f, 0f));
     	}
-    	if (Window.getMouse().clicked(Key.M_LEFT)) {
-    		getCamera().setZoom(getCamera().getZoom()+0.1f);
-    	} else if (Window.getMouse().clicked(Key.M_RIGHT)) {
-    		getCamera().setZoom(getCamera().getZoom()-0.1f);
+    	if (Window.getMouse().pressed(Key.M_LEFT)) {
+    		getCamera().setZoom(getCamera().getZoom()+0.005f);
+    	} else if (Window.getMouse().pressed(Key.M_RIGHT)) {
+    		getCamera().setZoom(getCamera().getZoom()-0.005f);
     	}
-    	//getCamera().setPosition(player.getPosition());
+    	getCamera().setPosition(new Vec2(player.getPosition()).mul(-1f));
     }
 
 	@Override
