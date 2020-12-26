@@ -18,7 +18,7 @@ plugins {
 }
 
 project.ext.lwjglVersion = "3.2.3"
-project.ext.lwjglNatives = "natives-linux"
+project.ext.lwjglNatives = "natives-windows"
 
 repositories {
     // Use jcenter for resolving dependencies.
