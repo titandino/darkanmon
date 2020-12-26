@@ -2,11 +2,12 @@ package com.darkan.pkmn.engine.entity;
 
 import java.awt.Color;
 
-import org.lwjgl.util.vector.Vector2f;
-
 import com.darkan.pkmn.engine.gfx.mesh.Mesh;
 import com.darkan.pkmn.engine.gfx.texture.Texture;
 import com.darkan.pkmn.engine.render.FBO;
+
+import glm.Glm;
+import glm.vec._2.Vec2;
 
 /**
  * Created by trent on 4/6/2018.
@@ -16,11 +17,11 @@ import com.darkan.pkmn.engine.render.FBO;
  */
 public class Entity {
     //Transform variables
-    private Vector2f position;
+    private Vec2 position;
     private float rotation;
-    private Vector2f scale;
+    private Vec2 scale;
 
-    private Vector2f velocity;
+    private Vec2 velocity;
 
     //Texture and texture coordinates
     private Mesh mesh;
@@ -28,8 +29,8 @@ public class Entity {
     private boolean texFbo;
     private Color color;
 
-    public Entity(Vector2f position, float width, float height, Mesh mesh, Texture texture) {
-        this(position, new Vector2f(0, 0), width, height, mesh, texture);
+    public Entity(Vec2 position, float width, float height, Mesh mesh, Texture texture) {
+        this(position, new Vec2(0, 0), width, height, mesh, texture);
     }
 
     /**
@@ -41,10 +42,10 @@ public class Entity {
      * @param height Height of rectangle.
      * @param texture Texture to bind to the entity.
      */
-    public Entity(Vector2f position, Vector2f velocity, float width, float height, Mesh mesh, Texture texture) {
+    public Entity(Vec2 position, Vec2 velocity, float width, float height, Mesh mesh, Texture texture) {
         this.position = position;
         this.velocity = velocity;
-        this.scale = new Vector2f(width, height);
+        this.scale = new Vec2(width, height);
         this.rotation = 0;
         this.mesh = mesh;
         this.texture = texture;
@@ -63,7 +64,7 @@ public class Entity {
      */
     public final void _update(float delta) {
         update(delta);
-        position = Vector2f.add(position, (Vector2f) velocity.scale(delta), position);
+        position = position.add(Glm.mul(velocity, delta));
     }
 
     /**
@@ -71,7 +72,7 @@ public class Entity {
      * @param point Point to check
      * @return Whether the point is within the rectangle
      */
-    public boolean collides(Vector2f point) {
+    public boolean collides(Vec2 point) {
         if (point.x > (position.x+scale.x/2))
             return false;
         if (point.x < (position.x-scale.x/2))
@@ -91,11 +92,11 @@ public class Entity {
         this.texture = texture;
     }
 
-    public Vector2f getPosition() {
+    public Vec2 getPosition() {
         return position;
     }
 
-    public void setPosition(Vector2f position) {
+    public void setPosition(Vec2 position) {
         this.position = position;
     }
 
@@ -107,19 +108,19 @@ public class Entity {
         this.rotation = rotation;
     }
 
-    public Vector2f getScale() {
+    public Vec2 getScale() {
         return scale;
     }
 
-    public void setScale(Vector2f scale) {
+    public void setScale(Vec2 scale) {
         this.scale = scale;
     }
 
-    public Vector2f getVelocity() {
+    public Vec2 getVelocity() {
         return velocity;
     }
 
-    public void setVelocity(Vector2f velocity) {
+    public void setVelocity(Vec2 velocity) {
         this.velocity = velocity;
     }
     

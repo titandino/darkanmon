@@ -15,7 +15,8 @@ import com.darkan.pkmn.engine.render.FBO;
 import com.darkan.pkmn.engine.render.FontRenderer;
 import com.darkan.pkmn.engine.util.Camera;
 import com.darkan.pkmn.engine.util.Util;
-import org.lwjgl.util.vector.Vector2f;
+
+import glm.vec._2.Vec2;
 
 public class GameManager {
 	
@@ -61,7 +62,7 @@ public class GameManager {
 		MeshManager.init();
 		
 		fbo = new FBO(GameManager.getResolution().getWidth(), GameManager.getResolution().getHeight());
-		view = new Entity(new Vector2f(0, 0), 1, 1, MeshManager.defaultMesh(), fbo);
+		view = new Entity(new Vec2(0, 0), 1, 1, MeshManager.defaultMesh(), fbo);
 		viewCam = new Camera();
 		
 		entityRenderer = new EntityRenderer(window);
@@ -85,11 +86,10 @@ public class GameManager {
 	public void renderView() {
 		//Bind render shader
 		entityRenderer._prepare(currentLevel);
-		//Set orthogonal matrix/glViewport to the screen width
-		//glOrtho(0, SCREEN_WIDTH, 0, SCREEN_HEIGHT, -1, 1);
+		//Setup orthogonal projection and camera
 		Util.glOrtho(entityRenderer.getShader(), window.getWidth(), window.getHeight());
 		glViewport(0, 0, window.getWidth(), window.getHeight());
-		viewCam.setOrigin(new Vector2f(window.getWidth() / 2, window.getHeight() / 2));
+		//viewCam.setOrigin(new Vec2(window.getWidth() / 2, window.getHeight() / 2));
 		glClear(GL_COLOR_BUFFER_BIT);
 		//Render the fbo to the view entity
 		viewCam.bindUniform(entityRenderer.getShader());
@@ -172,8 +172,8 @@ public class GameManager {
 		int scaledHeight = (int) (ratio * GameManager.getResolution().getHeight());
 
 		//Calculate the best scale to fit the device's height/width
-		view.setScale(new Vector2f(scaledWidth, scaledHeight));
-		view.setPosition(new Vector2f(window.getWidth()/2f, window.getHeight()/2f));
+		view.setScale(new Vec2(scaledWidth, scaledHeight));
+		view.setPosition(new Vec2(window.getWidth()/2f, window.getHeight()/2f));
 	}
 
 	public void notifyWindowResize() {

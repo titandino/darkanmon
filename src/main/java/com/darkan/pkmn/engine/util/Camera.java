@@ -2,22 +2,20 @@ package com.darkan.pkmn.engine.util;
 
 import static org.lwjgl.opengl.GL20.*;
 
-import java.nio.FloatBuffer;
-
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
-
 import com.darkan.pkmn.engine.render.Shader;
+
+import glm.mat._4.Mat4;
+import glm.vec._2.Vec2;
+import glm.vec._3.Vec3;
 
 public class Camera {
 
-	private Vector2f origin;
-	private Vector2f position;
+	private Vec2 origin;
+	private Vec2 position;
 	private float rotation;
 	private float zoom;
 	
-	public Camera(Vector2f origin, Vector2f position, float rotation, float zoom) {
+	public Camera(Vec2 origin, Vec2 position, float rotation, float zoom) {
 		this.origin = origin;
 		this.position = position;
 		this.rotation = rotation;
@@ -25,37 +23,37 @@ public class Camera {
 	}
 	
 	public Camera() {
-		this(new Vector2f(0.0f, 0.0f), new Vector2f(0.0f, 0.0f), 0.0f, 1.0f);
+		this(new Vec2(0.0f, 0.0f), new Vec2(0.0f, 0.0f), 0.0f, 1.0f);
 	}
 	
-	public Matrix4f getTransform() {
-		Matrix4f transform = new Matrix4f();
-		transform.translate(origin);
-		Matrix4f.mul(transform, new Matrix4f().rotate(rotation, new Vector3f(0f, 0f, 1f)), transform);
-		Matrix4f.mul(transform, new Matrix4f().scale(new Vector3f(zoom, zoom, 1f)), transform);
-		Matrix4f.mul(transform, new Matrix4f().translate(position), transform);
-		return transform;
+	public Mat4 getTransform() {
+		Mat4 trans = new Mat4().identity();
+		
+		trans.mul(new Mat4().translate(new Vec3(origin.x, origin.y, 0f)));
+		trans.mul(new Mat4().scale(zoom, zoom, 1.0f));
+		trans.mul(new Mat4().rotate(rotation, new Vec3(0f, 0f, 1f)));
+		trans.mul(new Mat4().translate(new Vec3(position.x, position.y, 0f)));
+		
+		return trans;
 	}
 	
 	public void bindUniform(Shader shader) {
-		FloatBuffer transform = FloatBuffer.allocate(16);
-		getTransform().store(transform);
-		glUniformMatrix4fv(shader.getUniformLocation("camMtx"), false, transform);
+		glUniformMatrix4fv(shader.getUniformLocation("camMtx"), false, getTransform().toDfb_());
 	}
 	
-	public Vector2f getOrigin() {
+	public Vec2 getOrigin() {
 		return origin;
 	}
 
-	public void setOrigin(Vector2f origin) {
+	public void setOrigin(Vec2 origin) {
 		this.origin = origin;
 	}
 
-	public Vector2f getPosition() {
+	public Vec2 getPosition() {
 		return position;
 	}
 
-	public void setPosition(Vector2f position) {
+	public void setPosition(Vec2 position) {
 		this.position = position;
 	}
 

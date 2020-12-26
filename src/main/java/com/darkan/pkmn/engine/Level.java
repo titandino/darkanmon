@@ -3,8 +3,6 @@ package com.darkan.pkmn.engine;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.lwjgl.util.vector.Vector2f;
-
 import com.darkan.pkmn.engine.entity.Entity;
 import com.darkan.pkmn.engine.render.EntityRenderer;
 import com.darkan.pkmn.engine.render.FBO;
@@ -26,7 +24,7 @@ public abstract class Level {
     public abstract void init();
     
     public final void _init() {
-    	camera.setOrigin(new Vector2f(GameManager.getResolution().getWidth()/2, GameManager.getResolution().getHeight()/2));
+    	//camera.setOrigin(new Vec2(GameManager.getResolution().getWidth()/2, GameManager.getResolution().getHeight()/2));
     	init();
     }
 

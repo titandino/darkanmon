@@ -44,6 +44,6 @@ mat4 rotateZMtx(float a) {
 
 void main() {
     texCoord = texCoordIn;
-    mat4 transform = translateMtx(translation) * rotateZMtx(rotation*degToRad) * translateMtx(-scale / 2.0f) * scaleMtx(scale) * camMtx;
-    gl_Position = ortho * transform * vec4(positionIn.xy, 0.0, 1.0);
+    mat4 transform = translateMtx(translation) * rotateZMtx(rotation*degToRad) * translateMtx(-scale / 2.0f) * scaleMtx(scale);
+    gl_Position = ortho * camMtx * transform * vec4(positionIn.xy, 0.0, 1.0);
 }
