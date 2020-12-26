@@ -2,7 +2,7 @@ package com.darkan.pkmn;
 
 import com.darkan.pkmn.engine.GameManager;
 import com.darkan.pkmn.engine.base.Resolution;
-import com.darkan.pkmn.levels.Game;
+import com.darkan.pkmn.levels.MainMenu;
 
 public class Main {
 
@@ -19,7 +19,7 @@ public class Main {
 					manager.shutdown();
 			}
 		});
-		manager = GameManager.create(new Game(), windowSize, gameResolution);
+		manager = GameManager.create(new MainMenu(), windowSize, gameResolution);
 	}
 
 }
