@@ -4,6 +4,7 @@ precision mediump float;
 
 const float degToRad = 3.1415926535897932384626433832795f / 180.0f;
 
+uniform mat4 camMtx;
 uniform mat4 ortho;
 uniform vec2 translation;
 uniform float rotation;
@@ -44,5 +45,5 @@ mat4 rotateZMtx(float a) {
 void main() {
     texCoord = texCoordIn;
     mat4 transform = translateMtx(translation) * rotateZMtx(rotation*degToRad) * translateMtx(-scale / 2.0f) * scaleMtx(scale);
-    gl_Position = ortho * transform * vec4(positionIn.xy, 0.0, 1.0);
+    gl_Position = ortho * camMtx * transform * vec4(positionIn.xy, 0.0, 1.0);
 }

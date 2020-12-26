@@ -2,7 +2,7 @@ package com.darkan.pkmn.engine.text;
 
 import java.awt.Color;
 
-import com.darkan.pkmn.engine.util.Vector2f;
+import glm.vec._2.Vec2;
 
 public class TextEffects {
 	
@@ -11,7 +11,7 @@ public class TextEffects {
 	private float borderWidth;
 	private float borderEdge;
 	private Color borderColor;
-	private Vector2f borderOffset;
+	private Vec2 borderOffset;
 	
 	public TextEffects() {
 		none();
@@ -23,7 +23,7 @@ public class TextEffects {
 		borderWidth = 0.0f;
 		borderEdge = 0.35f;
 		borderColor = Color.BLACK;
-		borderOffset = new Vector2f(0.0f, 0.0f);
+		borderOffset = new Vec2(0.0f, 0.0f);
 		return this;
 	}
 	
@@ -38,7 +38,7 @@ public class TextEffects {
 		borderColor = color;
 		borderWidth = 0.7f;
 		borderEdge = 0.1f;
-		borderOffset = new Vector2f(0.006f, 0.006f);
+		borderOffset = new Vec2(0.006f, 0.006f);
 		return this;
 	}
 	
@@ -78,11 +78,11 @@ public class TextEffects {
 		this.borderEdge = borderEdge;
 	}
 
-	public Vector2f getBorderOffset() {
+	public Vec2 getBorderOffset() {
 		return borderOffset;
 	}
 
-	public void setBorderOffset(Vector2f borderOffset) {
+	public void setBorderOffset(Vec2 borderOffset) {
 		this.borderOffset = borderOffset;
 	}
 	

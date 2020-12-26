@@ -5,11 +5,11 @@ import static org.lwjgl.glfw.GLFW.*;
 import java.nio.DoubleBuffer;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFWMouseButtonCallback;
-
 import com.darkan.pkmn.engine.base.Window;
 import com.darkan.pkmn.engine.entity.Entity;
 import com.darkan.pkmn.engine.util.Util;
-import com.darkan.pkmn.engine.util.Vector2f;
+
+import glm.vec._2.Vec2;
 
 public class Mouse extends InputHandler {
 
@@ -48,7 +48,7 @@ public class Mouse extends InputHandler {
 	}
 
 	public boolean colliding(Entity entity) {
-		return Util.pointToRectangle(new Vector2f(x, y), entity.getPosition(), entity.getScale().x, entity.getScale().y);
+		return Util.pointToRectangle(new Vec2(x, y), entity.getPosition(), entity.getScale().x, entity.getScale().y);
 	}
 
 	public void update(Window window) {

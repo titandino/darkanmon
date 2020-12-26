@@ -5,7 +5,8 @@ import java.awt.Color;
 import com.darkan.pkmn.engine.gfx.mesh.Mesh;
 import com.darkan.pkmn.engine.text.font.Font;
 import com.darkan.pkmn.engine.text.font.FontManager;
-import com.darkan.pkmn.engine.util.Vector2f;
+
+import glm.vec._2.Vec2;
 
 public class Text {
 	private Font font;
@@ -13,21 +14,21 @@ public class Text {
 	private boolean centered;
 	private int numLines;
 	private String text;
-	private Vector2f position;
+	private Vec2 position;
     private float rotation;
-    private Vector2f scale;
+    private Vec2 scale;
 	private Color color;
 	private Mesh mesh;
 	private TextEffects effects;
 	
-	public Text(String text, String fontName, float fontSize, float maxLineLen, Vector2f position, Color color, boolean centered) {
+	public Text(String text, String fontName, float fontSize, float maxLineLen, Vec2 position, Color color, boolean centered) {
 		this.font = FontManager.getFont(fontName);
 		this.text = text;
 		this.position = position;
 		this.color = color;
 		this.maxLineLen = maxLineLen;
 		this.centered = centered;
-		this.scale = new Vector2f(fontSize * 1.5f, fontSize);
+		this.scale = new Vec2(fontSize * 1.5f, fontSize);
 		this.mesh = font.create(this);
 		this.effects = new TextEffects();
 	}
@@ -40,7 +41,7 @@ public class Text {
 		return text;
 	}
 
-	public Vector2f getPosition() {
+	public Vec2 getPosition() {
 		return position;
 	}
 
@@ -72,7 +73,7 @@ public class Text {
 		return rotation;
 	}
 
-	public Vector2f getScale() {
+	public Vec2 getScale() {
 		return scale;
 	}
 
@@ -80,7 +81,7 @@ public class Text {
 		return effects;
 	}
 	
-	public void setPosition(Vector2f position) {
+	public void setPosition(Vec2 position) {
 		this.position = position;
 	}
 
@@ -88,7 +89,7 @@ public class Text {
 		this.rotation = rotation;
 	}
 
-	public void setScale(Vector2f scale) {
+	public void setScale(Vec2 scale) {
 		this.scale = scale;
 	}
 

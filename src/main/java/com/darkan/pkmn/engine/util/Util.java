@@ -4,6 +4,9 @@ import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import com.darkan.pkmn.engine.render.Shader;
+
+import glm.vec._2.Vec2;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -93,7 +96,7 @@ public class Util {
         glUniformMatrix4fv(shader.getUniformLocation("ortho"), true, b);
     }
     
-    public static boolean pointToRectangle(Vector2f point, Vector2f rect, double width, double height) {
+    public static boolean pointToRectangle(Vec2 point, Vec2 rect, double width, double height) {
 		double left = rect.x-width/2; double right = rect.x+width/2;
 		double top = rect.y-height/2; double bottom = rect.y+height/2;
 		return !(point.x <= left || point.x >= right || point.y <= top || point.y >= bottom);

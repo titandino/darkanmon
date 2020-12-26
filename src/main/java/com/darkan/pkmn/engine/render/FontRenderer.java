@@ -3,11 +3,9 @@ package com.darkan.pkmn.engine.render;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.*;
 
-import com.darkan.pkmn.engine.GameManager;
 import com.darkan.pkmn.engine.Level;
 import com.darkan.pkmn.engine.base.Window;
 import com.darkan.pkmn.engine.text.Text;
-import com.darkan.pkmn.engine.util.Util;
 
 public class FontRenderer extends Renderer {
 
@@ -16,8 +14,8 @@ public class FontRenderer extends Renderer {
 	}
 
 	@Override
-	public void prepare() {
-		Util.glOrtho(getShader(), GameManager.getResolution().getWidth(),  GameManager.getResolution().getHeight());
+	public void prepare(Level level) {
+		level.getCamera().bindUniform(getShader());
 	}
 
 	@Override

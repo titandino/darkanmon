@@ -13,14 +13,15 @@ import com.darkan.pkmn.engine.gfx.texture.TextureManager;
 import com.darkan.pkmn.engine.render.EntityRenderer;
 import com.darkan.pkmn.engine.render.FBO;
 import com.darkan.pkmn.engine.render.FontRenderer;
+import com.darkan.pkmn.engine.util.Camera;
 import com.darkan.pkmn.engine.util.Util;
-import com.darkan.pkmn.engine.util.Vector2f;
+
+import glm.vec._2.Vec2;
 
 public class GameManager {
 	
 	private static GameManager singleton;
 	
-	private Resolution windowSize;
 	private Resolution resolution;
 	
 	private Window window;
@@ -29,28 +30,28 @@ public class GameManager {
 	private Level currentLevel;
 	
 	private FBO fbo;
+	private Camera viewCam;
 	private Entity view;
 	
 	private long prevFrame = System.currentTimeMillis();
 			
-	private GameManager(Level startLevel, Resolution windowSize, Resolution resolution) {
+	private GameManager(Level startLevel, Resolution resolution) {
 		this.currentLevel = startLevel;
-		this.windowSize = windowSize;
 		this.resolution = resolution;
 	}
 
 	public static final GameManager create(Level startLevel, Resolution windowSize, Resolution resolution) {
 		if (singleton != null)
 			throw new IllegalArgumentException("Game manager has already been instantiated.");
-		singleton = new GameManager(startLevel, windowSize, resolution);
-		singleton.init();
+		singleton = new GameManager(startLevel, resolution);
+		singleton.init(windowSize);
 		return singleton;
 	}
 	
-	public final void init() {
+	public final void init(Resolution windowSize) {
 		System.out.println("Inited LWJGL version " + Version.getVersion() + ".");
 		
-		window = new Window("Level", windowSize);
+		window = new Window("Darkanmon", windowSize);
 		window.center();
 		window.makeCurrent();
 		window.setVsync(true);
@@ -61,7 +62,8 @@ public class GameManager {
 		MeshManager.init();
 		
 		fbo = new FBO(GameManager.getResolution().getWidth(), GameManager.getResolution().getHeight());
-		view = new Entity(new Vector2f(0, 0), 1, 1, MeshManager.defaultMesh(), fbo);
+		view = new Entity(new Vec2(0, 0), 1, 1, MeshManager.defaultMesh(), fbo);
+		viewCam = new Camera();
 		
 		entityRenderer = new EntityRenderer(window);
 		fontRenderer = new FontRenderer(window);
@@ -83,17 +85,19 @@ public class GameManager {
 	
 	public void renderView() {
 		//Bind render shader
-		entityRenderer._prepare();
-		//Set orthogonal matrix/glViewport to the screen width
-		//glOrtho(0, SCREEN_WIDTH, 0, SCREEN_HEIGHT, -1, 1);
+		entityRenderer._prepare(currentLevel);
+		//Setup orthogonal projection and camera
 		Util.glOrtho(entityRenderer.getShader(), window.getWidth(), window.getHeight());
 		glViewport(0, 0, window.getWidth(), window.getHeight());
+		//viewCam.setOrigin(new Vec2(window.getWidth() / 2, window.getHeight() / 2));
 		glClear(GL_COLOR_BUFFER_BIT);
 		//Render the fbo to the view entity
+		viewCam.bindUniform(entityRenderer.getShader());
 		entityRenderer.render(view);
 		currentLevel.renderUIEntity(entityRenderer);
 		entityRenderer._end();
-		fontRenderer._prepare();
+		fontRenderer._prepare(currentLevel);
+		viewCam.bindUniform(fontRenderer.getShader());
 		currentLevel.renderUIFont(fontRenderer);
 		fontRenderer._end();
 	}
@@ -112,7 +116,7 @@ public class GameManager {
 		 * BIND GAME VIEW FBO
 		 * All rendering after this will be rendered to the game world!
 		 */
-		entityRenderer._prepare();
+		entityRenderer._prepare(currentLevel);
 		fbo.bindFBO();
 		
 		Util.glOrtho(entityRenderer.getShader(), GameManager.getResolution().getWidth(),  GameManager.getResolution().getHeight());
@@ -145,7 +149,7 @@ public class GameManager {
 			currentLevel.finish();
 		currentLevel = level;
 		
-		currentLevel.init();
+		currentLevel._init();
 		resizeScreen();
 	}
 
@@ -168,8 +172,8 @@ public class GameManager {
 		int scaledHeight = (int) (ratio * GameManager.getResolution().getHeight());
 
 		//Calculate the best scale to fit the device's height/width
-		view.setScale(new Vector2f(scaledWidth, scaledHeight));
-		view.setPosition(new Vector2f(window.getWidth()/2f, window.getHeight()/2f));
+		view.setScale(new Vec2(scaledWidth, scaledHeight));
+		view.setPosition(new Vec2(window.getWidth()/2f, window.getHeight()/2f));
 	}
 
 	public void notifyWindowResize() {

@@ -14,8 +14,8 @@ public class EntityRenderer extends Renderer {
 	}
 
 	@Override
-	public void prepare() {
-
+	public void prepare(Level level) {
+		level.getCamera().bindUniform(getShader());
 	}
 	
 	public void render(Level level) {

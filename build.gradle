@@ -39,8 +39,8 @@ dependencies {
 	implementation "org.lwjgl:lwjgl-opengl"
 	implementation "org.lwjgl:lwjgl-stb"
 	
-	// https://mvnrepository.com/artifact/org.lwjgl/lwjgl-util
-	compile group: 'org.lwjgl', name: 'lwjgl-util', version: '2.7.1'
+	// https://mvnrepository.com/artifact/io.github.java-graphics/glm
+	compile group: 'io.github.java-graphics', name: 'glm', version: '1.0.1'
 		
 	runtimeOnly "org.lwjgl:lwjgl::$lwjglNatives"
 	runtimeOnly "org.lwjgl:lwjgl-assimp::$lwjglNatives"
