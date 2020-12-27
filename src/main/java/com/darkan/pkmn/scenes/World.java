@@ -12,7 +12,7 @@ import com.darkan.pkmn.engine.render.RenderPriority;
 
 import glm.vec._2.Vec2;
 
-public class Game extends Scene {
+public class World extends Scene {
 	
 	private static float P_SPEED = 25.0f;
 	

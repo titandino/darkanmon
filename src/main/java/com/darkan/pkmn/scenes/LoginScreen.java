@@ -13,7 +13,7 @@ import com.darkan.pkmn.engine.render.RenderPriority;
 
 import glm.vec._2.Vec2;
 
-public class MainMenu extends Scene {
+public class LoginScreen extends Scene {
 
 	private Entity playButton;
 
@@ -48,7 +48,7 @@ public class MainMenu extends Scene {
 	@Override
 	public void update(float delta) {
 		if (Window.getMouse().colliding(playButton) && Window.getMouse().clicked(Key.M_LEFT))
-			GameManager.get().setScene(new Game());
+			GameManager.get().setScene(new World());
 	}
 
 	@Override
