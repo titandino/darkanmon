@@ -136,11 +136,11 @@ public class GameManager {
 		 */
 		fbo.unbindFBO();
 		
-		// Call the post processing method in case the level has special post processing
+		// Call the post processing method in case the scene has special post processing
 		FBO newFBO = scene.postProcess(fbo);
 		if (newFBO != null)
 			view.setTexture(newFBO);
-		// Render the level FBO using the view provided
+		// Render the scene FBO using the view provided
 		renderView();
 	}
 	
