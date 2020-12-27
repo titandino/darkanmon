@@ -27,7 +27,7 @@ public class GameManager {
 	private Window window;
 	private EntityRenderer entityRenderer;
 	private FontRenderer fontRenderer;
-	private Level currentLevel;
+	private Scene scene;
 	
 	private FBO fbo;
 	private Camera viewCam;
@@ -35,15 +35,15 @@ public class GameManager {
 	
 	private long prevFrame = System.currentTimeMillis();
 			
-	private GameManager(Level startLevel, Resolution resolution) {
-		this.currentLevel = startLevel;
+	private GameManager(Scene scene, Resolution resolution) {
+		this.scene = scene;
 		this.resolution = resolution;
 	}
 
-	public static final GameManager create(Level startLevel, Resolution windowSize, Resolution resolution) {
+	public static final GameManager create(Scene scene, Resolution windowSize, Resolution resolution) {
 		if (singleton != null)
 			throw new IllegalArgumentException("Game manager has already been instantiated.");
-		singleton = new GameManager(startLevel, resolution);
+		singleton = new GameManager(scene, resolution);
 		singleton.init(windowSize);
 		return singleton;
 	}
@@ -72,7 +72,7 @@ public class GameManager {
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		
-		setLevel(currentLevel);
+		setScene(scene);
 		
 		while(!window.isClosed()) {
 			loop();
@@ -85,7 +85,7 @@ public class GameManager {
 	
 	public void renderView() {
 		//Bind render shader
-		entityRenderer._prepare(currentLevel);
+		entityRenderer._prepare(scene);
 		//Setup orthogonal projection and camera
 		Util.glOrtho(entityRenderer.getShader(), window.getWidth(), window.getHeight());
 		glViewport(0, 0, window.getWidth(), window.getHeight());
@@ -94,11 +94,11 @@ public class GameManager {
 		//Render the fbo to the view entity
 		viewCam.bindUniform(entityRenderer.getShader());
 		entityRenderer.render(view);
-		currentLevel.renderUIEntity(entityRenderer);
+		scene.renderUIEntity(entityRenderer);
 		entityRenderer._end();
-		fontRenderer._prepare(currentLevel);
+		fontRenderer._prepare(scene);
 		viewCam.bindUniform(fontRenderer.getShader());
-		currentLevel.renderUIFont(fontRenderer);
+		scene.renderUIFont(fontRenderer);
 		fontRenderer._end();
 	}
 
@@ -110,13 +110,13 @@ public class GameManager {
 
 		window.updateInputs();
 		
-		currentLevel._update(delta);
+		scene._update(delta);
 		
 		/*
 		 * BIND GAME VIEW FBO
 		 * All rendering after this will be rendered to the game world!
 		 */
-		entityRenderer._prepare(currentLevel);
+		entityRenderer._prepare(scene);
 		fbo.bindFBO();
 		
 		Util.glOrtho(entityRenderer.getShader(), GameManager.getResolution().getWidth(),  GameManager.getResolution().getHeight());
@@ -127,8 +127,8 @@ public class GameManager {
         glClear(GL_COLOR_BUFFER_BIT);
         
 		// ALL BASE GAME BUFFER RENDERING PROCEDURES
-		entityRenderer._render(currentLevel);
-		fontRenderer._render(currentLevel);
+		entityRenderer._render(scene);
+		fontRenderer._render(scene);
 		
 		/*
 		 * END GAME VIEW FBO
@@ -137,19 +137,19 @@ public class GameManager {
 		fbo.unbindFBO();
 		
 		// Call the post processing method in case the level has special post processing
-		FBO newFBO = currentLevel.postProcess(fbo);
+		FBO newFBO = scene.postProcess(fbo);
 		if (newFBO != null)
 			view.setTexture(newFBO);
 		// Render the level FBO using the view provided
 		renderView();
 	}
 	
-	public void setLevel(Level level) {
-		if (currentLevel != null)
-			currentLevel.finish();
-		currentLevel = level;
+	public void setScene(Scene newScene) {
+		if (scene != null)
+			scene.finish();
+		scene = newScene;
 		
-		currentLevel._init();
+		scene._init();
 		resizeScreen();
 	}
 
@@ -177,9 +177,9 @@ public class GameManager {
 	}
 
 	public void notifyWindowResize() {
-		if (entityRenderer != null && currentLevel != null) {
+		if (entityRenderer != null && scene != null) {
 			resizeScreen();
-			currentLevel.onWindowResize();
+			scene.onWindowResize();
 		}
 	}
 }

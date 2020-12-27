@@ -5,7 +5,7 @@ import static org.lwjgl.opengl.GL20.*;
 
 import java.util.List;
 
-import com.darkan.pkmn.engine.Level;
+import com.darkan.pkmn.engine.Scene;
 import com.darkan.pkmn.engine.base.Window;
 import com.darkan.pkmn.engine.entity.Entity;
 
@@ -16,13 +16,13 @@ public class EntityRenderer extends Renderer {
 	}
 
 	@Override
-	public void prepare(Level level) {
-		level.getCamera().bindUniform(getShader());
+	public void prepare(Scene scene) {
+		scene.getCamera().bindUniform(getShader());
 	}
 	
-	public void render(Level level) {
+	public void render(Scene scene) {
 		for (RenderPriority priority : RenderPriority.values()) {
-			List<Entity> entities = level.getEntities().get(priority);
+			List<Entity> entities = scene.getEntities().get(priority);
 			if (entities == null)
 				continue;
 			for (Entity ent : entities) {
@@ -30,7 +30,7 @@ public class EntityRenderer extends Renderer {
 	            	render(ent);
 	        }
 		}
-		level.renderExtraEntity(this);
+		scene.renderExtraEntity(this);
 	}
 	
 	public void render(Entity entity) {

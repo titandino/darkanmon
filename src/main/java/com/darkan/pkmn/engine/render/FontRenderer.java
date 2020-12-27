@@ -3,7 +3,7 @@ package com.darkan.pkmn.engine.render;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.*;
 
-import com.darkan.pkmn.engine.Level;
+import com.darkan.pkmn.engine.Scene;
 import com.darkan.pkmn.engine.base.Window;
 import com.darkan.pkmn.engine.text.Text;
 
@@ -14,15 +14,15 @@ public class FontRenderer extends Renderer {
 	}
 
 	@Override
-	public void prepare(Level level) {
-		level.getCamera().bindUniform(getShader());
+	public void prepare(Scene scene) {
+		scene.getCamera().bindUniform(getShader());
 	}
 
 	@Override
-	public void render(Level level) {
-		//TODO loop over level text and render using renderText()
+	public void render(Scene scene) {
+		//TODO loop over scene text and render using renderText()
 		
-		level.renderExtraFont(this);
+		scene.renderExtraFont(this);
 	}
 	
 	public void render(Text text) {

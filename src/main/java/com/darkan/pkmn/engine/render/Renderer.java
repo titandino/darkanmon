@@ -2,7 +2,7 @@ package com.darkan.pkmn.engine.render;
 
 import static org.lwjgl.opengl.GL11.*;
 
-import com.darkan.pkmn.engine.Level;
+import com.darkan.pkmn.engine.Scene;
 import com.darkan.pkmn.engine.base.Window;
 import com.darkan.pkmn.engine.gfx.mesh.MeshManager;
 import com.darkan.pkmn.engine.gfx.texture.TextureManager;
@@ -17,20 +17,20 @@ public abstract class Renderer {
 		shader = new Shader(vShaderFile, fShaderFile);
 	}
 	
-	public abstract void prepare(Level level);
+	public abstract void prepare(Scene scene);
 	
-	public void _prepare(Level level) {
+	public void _prepare(Scene scene) {
 		shader.use();
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		prepare(level);
+		prepare(scene);
 	}
 	
-	public abstract void render(Level level);
+	public abstract void render(Scene scene);
 	
-	public final void _render(Level level) {
-		_prepare(level);
-		render(level);
+	public final void _render(Scene scene) {
+		_prepare(scene);
+		render(scene);
 		_end();
 	}
 	

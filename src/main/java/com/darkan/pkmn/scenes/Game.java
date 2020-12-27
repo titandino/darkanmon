@@ -1,6 +1,6 @@
-package com.darkan.pkmn.levels;
+package com.darkan.pkmn.scenes;
 
-import com.darkan.pkmn.engine.Level;
+import com.darkan.pkmn.engine.Scene;
 import com.darkan.pkmn.engine.base.Window;
 import com.darkan.pkmn.engine.base.input.Key;
 import com.darkan.pkmn.engine.entity.Entity;
@@ -12,7 +12,7 @@ import com.darkan.pkmn.engine.render.RenderPriority;
 
 import glm.vec._2.Vec2;
 
-public class Game extends Level {
+public class Game extends Scene {
 	
 	private static float P_SPEED = 25.0f;
 	

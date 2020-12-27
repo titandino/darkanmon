@@ -15,16 +15,16 @@ import com.darkan.pkmn.engine.util.Camera;
 import glm.vec._2.Vec2;
 
 /**
- * Class to handle all the logic for a level instance.
+ * Class to handle all the logic for a scene instance.
  *
  * Created by trent on 4/16/2018.
  */
-public abstract class Level {
+public abstract class Scene {
     private Map<RenderPriority, List<Entity>> entities = new HashMap<>();
     private Camera camera = new Camera();
 
     /**
-     * Called when the level is first initialized.
+     * Called when the scene is first initialized.
      */
     public abstract void init();
     
@@ -34,7 +34,7 @@ public abstract class Level {
     }
 
     /**
-     * Handles the extra logic for the level.
+     * Handles the extra logic for the scene.
      * @param delta Time passed since last update in seconds.
      */
     public abstract void update(float delta);
@@ -90,12 +90,12 @@ public abstract class Level {
     
     public final void finish() {
     	//TODO unload all textures/meshes that will not
-    	//be used in the next level
+    	//be used in the next scene
     	entities.clear();
     }
 
     /**
-     * Add an entity to the level.
+     * Add an entity to the scene.
      * @param entity Entity to be added
      */
     public void addEntity(Entity entity) {
@@ -107,7 +107,7 @@ public abstract class Level {
     }
 
     /**
-     * Remove an entity from the level.
+     * Remove an entity from the scene.
      * @param entity Entity to be removed
      */
     public void removeEntity(Entity entity) {

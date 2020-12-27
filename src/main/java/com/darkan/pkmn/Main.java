@@ -2,7 +2,7 @@ package com.darkan.pkmn;
 
 import com.darkan.pkmn.engine.GameManager;
 import com.darkan.pkmn.engine.base.Resolution;
-import com.darkan.pkmn.levels.MainMenu;
+import com.darkan.pkmn.scenes.MainMenu;
 
 public class Main {
 

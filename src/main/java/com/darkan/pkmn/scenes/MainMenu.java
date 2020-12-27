@@ -1,7 +1,7 @@
-package com.darkan.pkmn.levels;
+package com.darkan.pkmn.scenes;
 
 import com.darkan.pkmn.engine.GameManager;
-import com.darkan.pkmn.engine.Level;
+import com.darkan.pkmn.engine.Scene;
 import com.darkan.pkmn.engine.base.Window;
 import com.darkan.pkmn.engine.base.input.Key;
 import com.darkan.pkmn.engine.entity.Entity;
@@ -13,7 +13,7 @@ import com.darkan.pkmn.engine.render.RenderPriority;
 
 import glm.vec._2.Vec2;
 
-public class MainMenu extends Level {
+public class MainMenu extends Scene {
 
 	private Entity playButton;
 
@@ -48,7 +48,7 @@ public class MainMenu extends Level {
 	@Override
 	public void update(float delta) {
 		if (Window.getMouse().colliding(playButton) && Window.getMouse().clicked(Key.M_LEFT))
-			GameManager.get().setLevel(new Game());
+			GameManager.get().setScene(new Game());
 	}
 
 	@Override
