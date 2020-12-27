@@ -14,6 +14,7 @@ public class Texture {
     protected int textureId;
     protected int width;
 	protected int height;
+	protected int bound;
 
     /**
      * Generate a texture from a bitmap.

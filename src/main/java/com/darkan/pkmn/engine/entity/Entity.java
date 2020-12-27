@@ -5,6 +5,7 @@ import java.awt.Color;
 import com.darkan.pkmn.engine.gfx.mesh.Mesh;
 import com.darkan.pkmn.engine.gfx.texture.Texture;
 import com.darkan.pkmn.engine.render.FBO;
+import com.darkan.pkmn.engine.render.RenderPriority;
 
 import glm.vec._2.Vec2;
 
@@ -27,9 +28,15 @@ public class Entity {
 	private Texture texture;
     private boolean texFbo;
     private Color color;
-
+    
+    private RenderPriority priority;
+    
     public Entity(Vec2 position, float width, float height, Mesh mesh, Texture texture) {
-        this(position, new Vec2(0, 0), width, height, mesh, texture);
+        this(RenderPriority.MAIN, position, new Vec2(0, 0), width, height, mesh, texture);
+    }
+
+    public Entity(RenderPriority priority, Vec2 position, float width, float height, Mesh mesh, Texture texture) {
+        this(priority, position, new Vec2(0, 0), width, height, mesh, texture);
     }
 
     /**
@@ -41,7 +48,7 @@ public class Entity {
      * @param height Height of rectangle.
      * @param texture Texture to bind to the entity.
      */
-    public Entity(Vec2 position, Vec2 velocity, float width, float height, Mesh mesh, Texture texture) {
+    public Entity(RenderPriority priority, Vec2 position, Vec2 velocity, float width, float height, Mesh mesh, Texture texture) {
         this.position = position;
         this.velocity = velocity;
         this.scale = new Vec2(width, height);
@@ -49,6 +56,7 @@ public class Entity {
         this.mesh = mesh;
         this.texture = texture;
         this.texFbo = texture instanceof FBO;
+        this.priority = priority;
     }
 
     /**
@@ -137,5 +145,9 @@ public class Entity {
 
 	public Color getColor() {
 		return color;
+	}
+
+	public RenderPriority getPriority() {
+		return priority;
 	}
 }

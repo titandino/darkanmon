@@ -1,12 +1,15 @@
 package com.darkan.pkmn.engine;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import com.darkan.pkmn.engine.entity.Entity;
 import com.darkan.pkmn.engine.render.EntityRenderer;
 import com.darkan.pkmn.engine.render.FBO;
 import com.darkan.pkmn.engine.render.FontRenderer;
+import com.darkan.pkmn.engine.render.RenderPriority;
 import com.darkan.pkmn.engine.util.Camera;
 
 import glm.vec._2.Vec2;
@@ -17,7 +20,7 @@ import glm.vec._2.Vec2;
  * Created by trent on 4/16/2018.
  */
 public abstract class Level {
-    protected ConcurrentHashMap<Integer, Entity> entities = new ConcurrentHashMap<>();
+    private Map<RenderPriority, List<Entity>> entities = new HashMap<>();
     private Camera camera = new Camera();
 
     /**
@@ -76,10 +79,12 @@ public abstract class Level {
         update(delta);
 
         //Update all entities
-        for (Entity ent : entities.values()) {
-            if (ent != null) {
-                ent._update(delta);
-            }
+        for (List<Entity> list : entities.values()) {
+	        for (Entity ent : list) {
+	            if (ent != null) {
+	                ent._update(delta);
+	            }
+	        }
         }
     }
     
@@ -94,7 +99,11 @@ public abstract class Level {
      * @param entity Entity to be added
      */
     public void addEntity(Entity entity) {
-        entities.put(entity.hashCode(), entity);
+    	List<Entity> list = entities.get(entity.getPriority());
+    	if (list == null)
+    		list = new ArrayList<>();
+    	list.add(entity);
+        entities.put(entity.getPriority(), list);
     }
 
     /**
@@ -102,10 +111,15 @@ public abstract class Level {
      * @param entity Entity to be removed
      */
     public void removeEntity(Entity entity) {
-        entities.remove(entity.hashCode());
+    	List<Entity> list = entities.get(entity.getPriority());
+    	if (list == null)
+    		return;
+    	list.remove(entity);
+    	if (list.size() <= 0)
+    		entities.remove(entity.getPriority(), list);
     }
 
-	public Map<Integer, Entity> getEntities() {
+	public Map<RenderPriority, List<Entity>> getEntities() {
 		return entities;
 	}
 

@@ -3,6 +3,8 @@ package com.darkan.pkmn.engine.render;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.*;
 
+import java.util.List;
+
 import com.darkan.pkmn.engine.Level;
 import com.darkan.pkmn.engine.base.Window;
 import com.darkan.pkmn.engine.entity.Entity;
@@ -19,10 +21,15 @@ public class EntityRenderer extends Renderer {
 	}
 	
 	public void render(Level level) {
-		for (Entity ent : level.getEntities().values()) {
-            if (ent != null)
-            	render(ent);
-        }
+		for (RenderPriority priority : RenderPriority.values()) {
+			List<Entity> entities = level.getEntities().get(priority);
+			if (entities == null)
+				continue;
+			for (Entity ent : entities) {
+	            if (ent != null)
+	            	render(ent);
+	        }
+		}
 		level.renderExtraEntity(this);
 	}
 	

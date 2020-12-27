@@ -8,6 +8,7 @@ import com.darkan.pkmn.engine.gfx.mesh.MeshManager;
 import com.darkan.pkmn.engine.gfx.texture.TextureManager;
 import com.darkan.pkmn.engine.render.EntityRenderer;
 import com.darkan.pkmn.engine.render.FontRenderer;
+import com.darkan.pkmn.engine.render.RenderPriority;
 
 import glm.vec._2.Vec2;
 
@@ -19,7 +20,7 @@ public class Game extends Level {
 
     @Override
     public void init() {
-    	Entity background = new Entity(new Vec2(0, 0), 384, 384, MeshManager.defaultMesh(), TextureManager.getTexture("pallet-town-test.png"));
+    	Entity background = new Entity(RenderPriority.BACKGROUND, new Vec2(0, 0), 384, 384, MeshManager.defaultMesh(), TextureManager.getTexture("pallet-town-test.png"));
         addEntity(background);
     	player = new Entity(new Vec2(0, 0), 32, 32, MeshManager.defaultMesh(), TextureManager.getTexture("player.png"));
     	addEntity(player);
