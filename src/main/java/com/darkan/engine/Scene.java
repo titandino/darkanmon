@@ -10,6 +10,7 @@ import com.darkan.engine.render.EntityRenderer;
 import com.darkan.engine.render.FBO;
 import com.darkan.engine.render.FontRenderer;
 import com.darkan.engine.render.RenderPriority;
+import com.darkan.engine.text.Text;
 import com.darkan.engine.util.Camera;
 
 import glm.vec._2.Vec2;
@@ -21,6 +22,9 @@ import glm.vec._2.Vec2;
  */
 public abstract class Scene {
     private Map<RenderPriority, List<Entity>> entities = new HashMap<>();
+    private Map<RenderPriority, List<Entity>> uiEntities = new HashMap<>();
+    private Map<RenderPriority, List<Text>> texts = new HashMap<>();
+    private Map<RenderPriority, List<Text>> uiTexts = new HashMap<>();
     private Camera camera = new Camera();
 
     /**

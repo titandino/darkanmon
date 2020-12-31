@@ -6,6 +6,8 @@ import com.darkan.engine.gfx.mesh.Mesh;
 import com.darkan.engine.gfx.texture.Texture;
 import com.darkan.engine.render.FBO;
 import com.darkan.engine.render.RenderPriority;
+import com.darkan.engine.util.BaseTransform;
+import com.darkan.engine.util.Transform;
 
 import glm.vec._2.Vec2;
 
@@ -16,11 +18,8 @@ import glm.vec._2.Vec2;
  * when rendered.
  */
 public class Entity {
-    //Transform variables
-    private Vec2 position;
-    private float rotation;
-    private Vec2 scale;
-
+	
+	private Transform transform;
     private Vec2 velocity;
 
     //Texture and texture coordinates
@@ -49,10 +48,8 @@ public class Entity {
      * @param texture Texture to bind to the entity.
      */
     public Entity(RenderPriority priority, Vec2 position, Vec2 velocity, float width, float height, Mesh mesh, Texture texture) {
-        this.position = position;
+    	this.transform = new BaseTransform(position, 0.0f, new Vec2(width, height));
         this.velocity = velocity;
-        this.scale = new Vec2(width, height);
-        this.rotation = 0;
         this.mesh = mesh;
         this.texture = texture;
         this.texFbo = texture instanceof FBO;
@@ -71,7 +68,7 @@ public class Entity {
      */
     public final void _update(float delta) {
         update(delta);
-        position = position.add(new Vec2(velocity).mul(delta));
+        transform.getPosition().add(new Vec2(velocity).mul(delta));
     }
 
     /**
@@ -80,13 +77,13 @@ public class Entity {
      * @return Whether the point is within the rectangle
      */
     public boolean collides(Vec2 point) {
-        if (point.x > (position.x+scale.x/2))
+        if (point.x > (getPosition().x+getScale().x/2))
             return false;
-        if (point.x < (position.x-scale.x/2))
+        if (point.x < (getPosition().x-getScale().x/2))
             return false;
-        if (point.y > (position.y+scale.y/2))
+        if (point.y > (getPosition().y+getScale().y/2))
             return false;
-        if (point.y < (position.y-scale.y/2))
+        if (point.y < (getPosition().y-getScale().y/2))
             return false;
         return true;
     }
@@ -100,27 +97,27 @@ public class Entity {
     }
 
     public Vec2 getPosition() {
-        return position;
+        return transform.getPosition();
     }
 
     public void setPosition(Vec2 position) {
-        this.position = position;
+        transform.setPosition(position);
     }
 
     public float getRotation() {
-        return rotation;
+        return transform.getRotation();
     }
 
     public void setRotation(float rotation) {
-        this.rotation = rotation;
+        transform.setRotation(rotation);
     }
 
     public Vec2 getScale() {
-        return scale;
+        return transform.getScale();
     }
 
     public void setScale(Vec2 scale) {
-        this.scale = scale;
+        transform.setScale(scale);
     }
 
     public Vec2 getVelocity() {
@@ -129,6 +126,14 @@ public class Entity {
 
     public void setVelocity(Vec2 velocity) {
         this.velocity = velocity;
+    }
+    
+    public Transform getTransform() {
+    	return transform;
+    }
+    
+    public void setTransform(BaseTransform transform) {
+    	this.transform = transform;
     }
     
     public Mesh getMesh() {

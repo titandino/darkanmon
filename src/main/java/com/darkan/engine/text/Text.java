@@ -5,30 +5,29 @@ import java.awt.Color;
 import com.darkan.engine.gfx.mesh.Mesh;
 import com.darkan.engine.text.font.Font;
 import com.darkan.engine.text.font.FontManager;
+import com.darkan.engine.util.BaseTransform;
+import com.darkan.engine.util.Transform;
 
 import glm.vec._2.Vec2;
 
 public class Text {
+	private Transform transform;
 	private Font font;
 	private float maxLineLen;
 	private boolean centered;
 	private int numLines;
 	private String text;
-	private Vec2 position;
-    private float rotation;
-    private Vec2 scale;
 	private Color color;
 	private Mesh mesh;
 	private TextEffects effects;
 	
 	public Text(String text, String fontName, float fontSize, float maxLineLen, Vec2 position, Color color, boolean centered) {
+		this.transform = new BaseTransform(position, new Vec2(fontSize * 1.5f, fontSize));
 		this.font = FontManager.getFont(fontName);
 		this.text = text;
-		this.position = position;
 		this.color = color;
 		this.maxLineLen = maxLineLen;
 		this.centered = centered;
-		this.scale = new Vec2(fontSize * 1.5f, fontSize);
 		this.mesh = font.create(this);
 		this.effects = new TextEffects();
 	}
@@ -39,10 +38,6 @@ public class Text {
 
 	public String getText() {
 		return text;
-	}
-
-	public Vec2 getPosition() {
-		return position;
 	}
 
 	public Color getColor() {
@@ -69,28 +64,32 @@ public class Text {
 		this.numLines = numLines;
 	}
 
-	public float getRotation() {
-		return rotation;
-	}
+    public Vec2 getPosition() {
+        return transform.getPosition();
+    }
 
-	public Vec2 getScale() {
-		return scale;
-	}
+    public void setPosition(Vec2 position) {
+        transform.setPosition(position);
+    }
+
+    public float getRotation() {
+        return transform.getRotation();
+    }
+
+    public void setRotation(float rotation) {
+        transform.setRotation(rotation);
+    }
+
+    public Vec2 getScale() {
+        return transform.getScale();
+    }
+
+    public void setScale(Vec2 scale) {
+        transform.setScale(scale);
+    }
 
 	public TextEffects getEffects() {
 		return effects;
-	}
-	
-	public void setPosition(Vec2 position) {
-		this.position = position;
-	}
-
-	public void setRotation(float rotation) {
-		this.rotation = rotation;
-	}
-
-	public void setScale(Vec2 scale) {
-		this.scale = scale;
 	}
 
 	public void setColor(Color color) {
@@ -99,5 +98,13 @@ public class Text {
 
 	public void setEffects(TextEffects effects) {
 		this.effects = effects;
+	}
+
+	public Transform getTransform() {
+		return transform;
+	}
+
+	public void setTransform(BaseTransform transform) {
+		this.transform = transform;
 	}
 }
