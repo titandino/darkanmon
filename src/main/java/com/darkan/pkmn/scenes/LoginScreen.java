@@ -1,15 +1,15 @@
 package com.darkan.pkmn.scenes;
 
-import com.darkan.pkmn.engine.GameManager;
-import com.darkan.pkmn.engine.Scene;
-import com.darkan.pkmn.engine.base.Window;
-import com.darkan.pkmn.engine.base.input.Key;
-import com.darkan.pkmn.engine.entity.Entity;
-import com.darkan.pkmn.engine.gfx.mesh.MeshManager;
-import com.darkan.pkmn.engine.gfx.texture.TextureManager;
-import com.darkan.pkmn.engine.render.EntityRenderer;
-import com.darkan.pkmn.engine.render.FontRenderer;
-import com.darkan.pkmn.engine.render.RenderPriority;
+import com.darkan.engine.GameManager;
+import com.darkan.engine.Scene;
+import com.darkan.engine.base.Window;
+import com.darkan.engine.base.input.Key;
+import com.darkan.engine.entity.Entity;
+import com.darkan.engine.gfx.mesh.MeshManager;
+import com.darkan.engine.gfx.texture.TextureManager;
+import com.darkan.engine.render.EntityRenderer;
+import com.darkan.engine.render.FontRenderer;
+import com.darkan.engine.render.RenderPriority;
 
 import glm.vec._2.Vec2;
 

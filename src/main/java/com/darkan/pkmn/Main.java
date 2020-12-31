@@ -1,7 +1,7 @@
 package com.darkan.pkmn;
 
-import com.darkan.pkmn.engine.GameManager;
-import com.darkan.pkmn.engine.base.Resolution;
+import com.darkan.engine.GameManager;
+import com.darkan.engine.base.Resolution;
 import com.darkan.pkmn.scenes.LoginScreen;
 
 public class Main {
