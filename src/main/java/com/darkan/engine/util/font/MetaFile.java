@@ -6,8 +6,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.darkan.engine.base.Window;
-
 public class MetaFile {
 	private static final int PAD_TOP = 0;
 	private static final int PAD_LEFT = 1;
@@ -18,8 +16,6 @@ public class MetaFile {
 
 	private static final String SPLITTER = " ";
 	private static final String NUMBER_SEPARATOR = ",";
-
-	private double aspectRatio;
 
 	private double verticalPerPixelSize;
 	private double horizontalPerPixelSize;
@@ -40,7 +36,6 @@ public class MetaFile {
 	 *            - the font file.
 	 */
 	protected MetaFile(String file) {
-		this.aspectRatio = (double) Window.get().getWidth() / (double) Window.get().getHeight();
 		openFile(file);
 		loadPaddingData();
 		loadLineSizes();
@@ -155,7 +150,7 @@ public class MetaFile {
 		processNextLine();
 		int lineHeightPixels = getValueOfVariable("lineHeight") - paddingHeight;
 		verticalPerPixelSize = FontMeshLoader.LINE_HEIGHT / (double) lineHeightPixels;
-		horizontalPerPixelSize = verticalPerPixelSize / aspectRatio;
+		horizontalPerPixelSize = verticalPerPixelSize;
 	}
 
 	/**
