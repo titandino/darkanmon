@@ -5,7 +5,7 @@ import static org.lwjgl.opengl.GL20.*;
 
 import com.darkan.engine.Scene;
 import com.darkan.engine.base.Window;
-import com.darkan.engine.text.Text;
+import com.darkan.engine.entity.text.Text;
 
 public class FontRenderer extends Renderer {
 
@@ -20,8 +20,8 @@ public class FontRenderer extends Renderer {
 
 	@Override
 	public void render(Scene scene) {
-		//TODO loop over scene text and render using renderText()
-		
+		for (Text entity : scene.getWorldEntities().getSortedText())
+			render(entity);
 		scene.renderExtraFont(this);
 	}
 	

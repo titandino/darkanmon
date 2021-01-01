@@ -1,10 +1,10 @@
-package com.darkan.engine.text.font;
+package com.darkan.engine.util.font;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.darkan.engine.entity.text.Text;
 import com.darkan.engine.gfx.mesh.Mesh;
-import com.darkan.engine.text.Text;
 
 public class FontMeshLoader {
 

@@ -29,7 +29,7 @@ public class OffsetTransform implements Transform {
 	}
 
 	public Vec2 getScale() {
-		return new Vec2(origin.getScale()).add(offset.getScale());
+		return new Vec2(origin.getScale()).mul(offset.getScale());
 	}
 
 	public void setScale(Vec2 scale) {

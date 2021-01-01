@@ -1,9 +1,9 @@
-package com.darkan.engine.text.font;
+package com.darkan.engine.util.font;
 
+import com.darkan.engine.entity.text.Text;
 import com.darkan.engine.gfx.mesh.Mesh;
 import com.darkan.engine.gfx.texture.Texture;
 import com.darkan.engine.gfx.texture.TextureManager;
-import com.darkan.engine.text.Text;
 
 public class Font {
 	

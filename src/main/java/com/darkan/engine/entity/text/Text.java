@@ -1,35 +1,36 @@
-package com.darkan.engine.text;
+package com.darkan.engine.entity.text;
 
 import java.awt.Color;
 
+import com.darkan.engine.entity.Entity;
 import com.darkan.engine.gfx.mesh.Mesh;
-import com.darkan.engine.text.font.Font;
-import com.darkan.engine.text.font.FontManager;
+import com.darkan.engine.render.RenderPriority;
 import com.darkan.engine.util.BaseTransform;
 import com.darkan.engine.util.Transform;
+import com.darkan.engine.util.font.Font;
+import com.darkan.engine.util.font.FontManager;
 
 import glm.vec._2.Vec2;
 
-public class Text {
-	private Transform transform;
+public class Text extends Entity {
 	private Font font;
 	private float maxLineLen;
 	private boolean centered;
 	private int numLines;
 	private String text;
-	private Color color;
-	private Mesh mesh;
 	private TextEffects effects;
 	
 	public Text(String text, String fontName, float fontSize, float maxLineLen, Vec2 position, Color color, boolean centered) {
+		super(RenderPriority.MAIN, position, fontSize * 1.5f, fontSize, null, null);
 		this.transform = new BaseTransform(position, new Vec2(fontSize * 1.5f, fontSize));
 		this.font = FontManager.getFont(fontName);
 		this.text = text;
 		this.color = color;
 		this.maxLineLen = maxLineLen;
 		this.centered = centered;
-		this.mesh = font.create(this);
 		this.effects = new TextEffects();
+		this.texture = font.getTextureAtlas();
+		this.mesh = font.create(this);
 	}
 	
 	public Font getFont() {

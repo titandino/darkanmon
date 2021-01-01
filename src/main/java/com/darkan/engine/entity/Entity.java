@@ -19,16 +19,17 @@ import glm.vec._2.Vec2;
  */
 public class Entity {
 	
-	private Transform transform;
-    private Vec2 velocity;
+	protected Transform transform;
+	protected Vec2 velocity;
 
     //Texture and texture coordinates
-    private Mesh mesh;
-	private Texture texture;
-    private boolean texFbo;
-    private Color color;
-    
-    private RenderPriority priority;
+	protected Mesh mesh;
+	protected Texture texture;
+	protected boolean texFbo;
+    protected Color color;
+    protected boolean markedForDeletion = false;
+
+	protected RenderPriority priority;
     
     public Entity(Vec2 position, float width, float height, Mesh mesh, Texture texture) {
         this(RenderPriority.MAIN, position, new Vec2(0, 0), width, height, mesh, texture);
@@ -87,6 +88,14 @@ public class Entity {
             return false;
         return true;
     }
+    
+    public boolean isMarkedForDeletion() {
+		return markedForDeletion;
+	}
+
+	public void delete() {
+		this.markedForDeletion = true;
+	}
 
     public void setColor(Color color) {
         this.color = color;

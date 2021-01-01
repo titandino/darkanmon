@@ -8,6 +8,7 @@ import org.lwjgl.opengl.GL;
 import com.darkan.engine.base.Resolution;
 import com.darkan.engine.base.Window;
 import com.darkan.engine.entity.Entity;
+import com.darkan.engine.entity.text.Text;
 import com.darkan.engine.gfx.mesh.MeshManager;
 import com.darkan.engine.gfx.texture.TextureManager;
 import com.darkan.engine.render.EntityRenderer;
@@ -84,21 +85,30 @@ public class GameManager {
 	}
 	
 	public void renderView() {
-		//Bind render shader
+		//Bind entity render shader
 		entityRenderer._prepare(scene);
+		
 		//Setup orthogonal projection and camera
 		Util.glOrtho(entityRenderer.getShader(), window.getWidth(), window.getHeight());
 		glViewport(0, 0, window.getWidth(), window.getHeight());
-		//viewCam.setOrigin(new Vec2(window.getWidth() / 2, window.getHeight() / 2));
 		glClear(GL_COLOR_BUFFER_BIT);
+		
 		//Render the fbo to the view entity
 		viewCam.bindUniform(entityRenderer.getShader());
 		entityRenderer.render(view);
-		scene.renderUIEntity(entityRenderer);
+		
+		//Render all UI elements
+		for (Entity uiEnt : scene.getUIEntities().getSortedEntities())
+			entityRenderer.render(uiEnt);
+		scene.renderExtraUIEntity(entityRenderer);
 		entityRenderer._end();
+		
+		//Render all UI text
 		fontRenderer._prepare(scene);
 		viewCam.bindUniform(fontRenderer.getShader());
-		scene.renderUIFont(fontRenderer);
+		for (Text uiText : scene.getUIEntities().getSortedText())
+			fontRenderer.render(uiText);
+		scene.renderExtraUIFont(fontRenderer);
 		fontRenderer._end();
 	}
 

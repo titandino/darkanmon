@@ -1,4 +1,4 @@
-package com.darkan.engine.text.font;
+package com.darkan.engine.util.font;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

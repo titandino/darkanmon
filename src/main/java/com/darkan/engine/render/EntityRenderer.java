@@ -3,8 +3,6 @@ package com.darkan.engine.render;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.*;
 
-import java.util.List;
-
 import com.darkan.engine.Scene;
 import com.darkan.engine.base.Window;
 import com.darkan.engine.entity.Entity;
@@ -21,15 +19,8 @@ public class EntityRenderer extends Renderer {
 	}
 	
 	public void render(Scene scene) {
-		for (RenderPriority priority : RenderPriority.values()) {
-			List<Entity> entities = scene.getEntities().get(priority);
-			if (entities == null)
-				continue;
-			for (Entity ent : entities) {
-	            if (ent != null)
-	            	render(ent);
-	        }
-		}
+		for (Entity entity : scene.getWorldEntities().getSortedEntities())
+			render(entity);
 		scene.renderExtraEntity(this);
 	}
 	

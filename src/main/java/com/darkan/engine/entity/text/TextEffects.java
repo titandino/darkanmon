@@ -1,4 +1,4 @@
-package com.darkan.engine.text;
+package com.darkan.engine.entity.text;
 
 import java.awt.Color;
 

@@ -6,8 +6,6 @@ import com.darkan.engine.base.input.Key;
 import com.darkan.engine.entity.Entity;
 import com.darkan.engine.gfx.mesh.MeshManager;
 import com.darkan.engine.gfx.texture.TextureManager;
-import com.darkan.engine.render.EntityRenderer;
-import com.darkan.engine.render.FontRenderer;
 import com.darkan.engine.render.RenderPriority;
 
 import glm.vec._2.Vec2;
@@ -46,14 +44,4 @@ public class World extends Scene {
     	}
     	getCamera().setPosition(new Vec2(player.getPosition()).mul(-1f));
     }
-
-	@Override
-	public void renderExtraEntity(EntityRenderer entityRenderer) {
-		
-	}
-
-	@Override
-	public void renderExtraFont(FontRenderer fontRenderer) {
-		
-	}
 }
