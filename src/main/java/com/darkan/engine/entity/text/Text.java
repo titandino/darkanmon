@@ -3,10 +3,9 @@ package com.darkan.engine.entity.text;
 import java.awt.Color;
 
 import com.darkan.engine.entity.Entity;
-import com.darkan.engine.gfx.mesh.Mesh;
 import com.darkan.engine.render.RenderPriority;
 import com.darkan.engine.util.BaseTransform;
-import com.darkan.engine.util.Transform;
+import com.darkan.engine.util.OffsetTransform;
 import com.darkan.engine.util.font.Font;
 import com.darkan.engine.util.font.FontManager;
 
@@ -33,20 +32,21 @@ public class Text extends Entity {
 		this.mesh = font.create(this);
 	}
 	
+	public Text(String text, String fontName, float fontSize, Vec2 position, Color color, boolean centered) {
+		this(text, fontName, fontSize, Integer.MAX_VALUE, position, color, centered);
+	}
+	
+	public Text(String text, String fontName, OffsetTransform transform, Color color, boolean centered) {
+		this(text, fontName, transform.getScale().x, Integer.MAX_VALUE, transform.getPosition(), color, centered);
+		this.setTransform(transform);
+	}
+	
 	public Font getFont() {
 		return font;
 	}
 
 	public String getText() {
 		return text;
-	}
-
-	public Color getColor() {
-		return color;
-	}
-
-	public Mesh getMesh() {
-		return mesh;
 	}
 
 	public float getMaxLineLen() {
@@ -65,30 +65,6 @@ public class Text extends Entity {
 		this.numLines = numLines;
 	}
 
-    public Vec2 getPosition() {
-        return transform.getPosition();
-    }
-
-    public void setPosition(Vec2 position) {
-        transform.setPosition(position);
-    }
-
-    public float getRotation() {
-        return transform.getRotation();
-    }
-
-    public void setRotation(float rotation) {
-        transform.setRotation(rotation);
-    }
-
-    public Vec2 getScale() {
-        return transform.getScale();
-    }
-
-    public void setScale(Vec2 scale) {
-        transform.setScale(scale);
-    }
-
 	public TextEffects getEffects() {
 		return effects;
 	}
@@ -99,13 +75,5 @@ public class Text extends Entity {
 
 	public void setEffects(TextEffects effects) {
 		this.effects = effects;
-	}
-
-	public Transform getTransform() {
-		return transform;
-	}
-
-	public void setTransform(BaseTransform transform) {
-		this.transform = transform;
 	}
 }

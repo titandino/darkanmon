@@ -150,7 +150,7 @@ public class Entity {
     	return transform;
     }
     
-    public void setTransform(BaseTransform transform) {
+    public void setTransform(Transform transform) {
     	this.transform = transform;
     }
     
