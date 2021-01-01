@@ -26,8 +26,8 @@ public class LoginScreen extends Scene {
 		Entity background = new Entity(RenderPriority.BACKGROUND, new Vec2(0, 0), GameManager.getResolution().getWidth(), GameManager.getResolution().getHeight(), MeshManager.defaultMesh(), TextureManager.getTexture("mainmenubg.png"));
 		addEntity(background);
 		
-		addEntity(new Text("Meme World", "runescape", 100, 4, new Vec2(0, 0), Color.BLACK, false));
-		addUIEntity(new Text("Meme UI", "runescape", 50, 4, new Vec2(100, 100), Color.RED, false));
+		addEntity(new Text("Meme World", "runescape", 100, 500, new Vec2(0, 0), Color.WHITE, false));
+		addUIEntity(new Text("Meme UI", "runescape", 50, 500, new Vec2(100, 100), Color.RED, false));
 	}
 
 	@Override

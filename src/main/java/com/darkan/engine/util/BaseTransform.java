@@ -41,4 +41,9 @@ public class BaseTransform implements Transform {
 	public void setScale(Vec2 scale) {
 		this.scale = scale;
 	}
+	
+	@Override
+	public String toString() {
+		return "["+position+", " + rotation + ", " + scale + "]";
+	}
 }

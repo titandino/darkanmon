@@ -106,6 +106,7 @@ public class GameManager {
 		
 		//Render all UI text
 		fontRenderer._prepare(scene);
+		Util.glOrtho(entityRenderer.getShader(), window.getWidth(), window.getHeight());
 		viewCam.bindUniform(fontRenderer.getShader());
 		for (Text uiText : scene.getUIEntities().getSortedText())
 			fontRenderer.render(uiText);
@@ -139,6 +140,8 @@ public class GameManager {
         
 		// ALL BASE GAME BUFFER RENDERING PROCEDURES
 		entityRenderer._render(scene);
+		fontRenderer.getShader().use();
+		Util.glOrtho(fontRenderer.getShader(), GameManager.getResolution().getWidth(),  GameManager.getResolution().getHeight());
 		fontRenderer._render(scene);
 		
 		/*

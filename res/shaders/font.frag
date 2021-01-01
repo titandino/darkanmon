@@ -15,7 +15,6 @@ uniform float borderEdge = 0.35;
 uniform vec2 borderOffset = vec2(0.006, 0.006);
 
 void main(void) {
-
 	float distance = 1.0 - texture(fontAtlas, texCoord.xy).a;
 	float alpha = 1.0 - smoothstep(smoothingWidth, smoothingWidth + smoothingEdge, distance);
 	float borderDist = 1.0 - texture(fontAtlas, texCoord.xy + borderOffset).a;
