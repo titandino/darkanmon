@@ -1,6 +1,7 @@
 package com.darkan.engine.base;
 
 import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.glfw.GLFWImage;
 import org.lwjgl.glfw.GLFWKeyCallbackI;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.system.MemoryStack;
@@ -8,6 +9,7 @@ import org.lwjgl.system.MemoryStack;
 import com.darkan.engine.GameManager;
 import com.darkan.engine.base.input.Keyboard;
 import com.darkan.engine.base.input.Mouse;
+import com.darkan.engine.util.glfw.WindowIcon;
 
 import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.glfw.GLFW.*;
@@ -25,7 +27,7 @@ public class Window {
 	
 	private static Window singleton;
 
-	public Window(String name, Resolution size) {
+	public Window(String name, Resolution size, WindowIcon icon) {
 		if (singleton != null)
 			throw new Error("A game window has already been created.");
 		this.size = size;
@@ -48,6 +50,13 @@ public class Window {
 			if (GameManager.get() != null)
 				GameManager.get().notifyWindowResize();
 		});
+		
+		
+		GLFWImage image = GLFWImage.malloc(); 
+		GLFWImage.Buffer imageBuffer = GLFWImage.malloc(1);
+        image.set(icon.getWidth(), icon.getHeight(), icon.getImage());
+        imageBuffer.put(0, image);
+        glfwSetWindowIcon(id, imageBuffer);
 		
 		mouse = new Mouse(this);
 		keyboard = new Keyboard(this);

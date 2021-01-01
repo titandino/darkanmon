@@ -21,14 +21,14 @@ public class Text extends Entity {
 	private TextEffects effects;
 	
 	public Text(String text, String fontName, float fontSize, float maxLineLen, Vec2 position, Color color, boolean centered) {
-		super(RenderPriority.MAIN, position, fontSize * 1.5f, fontSize, null, null);
-		this.transform = new BaseTransform(position, new Vec2(fontSize * 1.5f, fontSize));
-		this.font = FontManager.getFont(fontName);
+		super(RenderPriority.MAIN, position, fontSize, fontSize, null, null);
+		this.transform = new BaseTransform(position, new Vec2(fontSize, fontSize));
 		this.text = text;
 		this.color = color;
 		this.maxLineLen = maxLineLen;
 		this.centered = centered;
 		this.effects = new TextEffects();
+		this.font = FontManager.getFont(fontName);
 		this.texture = font.getTextureAtlas();
 		this.mesh = font.create(this);
 	}

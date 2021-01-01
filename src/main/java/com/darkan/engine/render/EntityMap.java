@@ -30,6 +30,9 @@ public class EntityMap {
 	}
 	
 	public void add(Entity entity) {
+		if (entity.getChildren() != null)
+    		for (Entity child : entity.getChildren())
+    			add(child);
 		if (masterSet.add(entity)) {
 			if (entity instanceof Text) {
     			List<Text> list = text.get(entity.getPriority());
@@ -48,6 +51,9 @@ public class EntityMap {
 	}
 	
     private void remove(Entity entity) {
+    	if (entity.getChildren() != null)
+    		for (Entity child : entity.getChildren())
+    			remove(child);
     	if (masterSet.remove(entity)) {
     		if (entity instanceof Text) {
     			List<Text> list = text.get(entity.getPriority());

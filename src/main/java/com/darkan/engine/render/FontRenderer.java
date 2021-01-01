@@ -26,6 +26,7 @@ public class FontRenderer extends Renderer {
 	}
 	
 	public void render(Text text) {
+		System.out.println("Rendering: " + text.getText());
 		text.getMesh().bind();
 		text.getFont().getTextureAtlas().bind(getShader().getUniformLocation("fontAtlas"));
 

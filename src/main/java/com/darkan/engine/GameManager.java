@@ -16,6 +16,7 @@ import com.darkan.engine.render.FBO;
 import com.darkan.engine.render.FontRenderer;
 import com.darkan.engine.util.Camera;
 import com.darkan.engine.util.Util;
+import com.darkan.engine.util.glfw.WindowIcon;
 
 import glm.vec._2.Vec2;
 
@@ -52,7 +53,7 @@ public class GameManager {
 	public final void init(Resolution windowSize) {
 		System.out.println("Inited LWJGL version " + Version.getVersion() + ".");
 		
-		window = new Window("Darkanmon", windowSize);
+		window = new Window("Darkanmon", windowSize, WindowIcon.loadImage("./res/pokeball.png"));
 		window.center();
 		window.makeCurrent();
 		window.setVsync(true);

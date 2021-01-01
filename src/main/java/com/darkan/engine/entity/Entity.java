@@ -1,6 +1,8 @@
 package com.darkan.engine.entity;
 
 import java.awt.Color;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.darkan.engine.gfx.mesh.Mesh;
 import com.darkan.engine.gfx.texture.Texture;
@@ -27,6 +29,7 @@ public class Entity {
 	protected Texture texture;
 	protected boolean texFbo;
     protected Color color;
+    protected Set<Entity> children;
     protected boolean markedForDeletion = false;
 
 	protected RenderPriority priority;
@@ -87,6 +90,12 @@ public class Entity {
         if (point.y < (getPosition().y-getScale().y/2))
             return false;
         return true;
+    }
+    
+    public void addChild(Entity entity) {
+    	if (children == null)
+    		children = new HashSet<>();
+    	children.add(entity);
     }
     
     public boolean isMarkedForDeletion() {
@@ -159,6 +168,10 @@ public class Entity {
 
 	public Color getColor() {
 		return color;
+	}
+	
+	public Set<Entity> getChildren() {
+		return children;
 	}
 
 	public RenderPriority getPriority() {

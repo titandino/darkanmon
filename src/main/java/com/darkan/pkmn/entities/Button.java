@@ -1,5 +1,7 @@
-package com.darkan.pkmn.entities;
-
-public class Button {
-	//TODO generic UI button using text renderer for text
-}
+//package com.darkan.pkmn.entities;
+//
+//import com.darkan.engine.entity.Entity;
+//
+//public class Button extends Entity {
+//
+//}
