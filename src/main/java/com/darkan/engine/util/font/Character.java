@@ -57,27 +57,27 @@ public class Character {
 		return id;
 	}
 
-	protected double getxTextureCoord() {
+	protected double getXTexCoord() {
 		return xTextureCoord;
 	}
 
-	protected double getyTextureCoord() {
+	protected double getYTexCoord() {
 		return yTextureCoord;
 	}
 
-	protected double getXMaxTextureCoord() {
+	protected double getXMaxTexCoord() {
 		return xMaxTextureCoord;
 	}
 
-	protected double getYMaxTextureCoord() {
+	protected double getYMaxTexCoord() {
 		return yMaxTextureCoord;
 	}
 
-	protected double getxOffset() {
+	protected double getXOffset() {
 		return xOffset;
 	}
 
-	protected double getyOffset() {
+	protected double getYOffset() {
 		return yOffset;
 	}
 

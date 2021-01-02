@@ -1,13 +1,10 @@
 package com.darkan.pkmn.scenes;
 
-import java.awt.Color;
-
 import com.darkan.engine.GameManager;
 import com.darkan.engine.Scene;
 import com.darkan.engine.base.Window;
 import com.darkan.engine.base.input.Key;
 import com.darkan.engine.entity.Entity;
-import com.darkan.engine.entity.text.Text;
 import com.darkan.engine.gfx.mesh.MeshManager;
 import com.darkan.engine.gfx.texture.TextureManager;
 import com.darkan.engine.render.RenderPriority;
@@ -21,14 +18,11 @@ public class LoginScreen extends Scene {
 
 	@Override
 	public void init() {
-		playButton = new Button("Play", new Vec2(Window.get().getWidth() / 2, 150), 1f);
+		playButton = new Button("Play", new Vec2(Window.get().getWidth() / 2, 150), 1f, 55f);
 		addUIEntity(playButton);
 
 		Entity background = new Entity(RenderPriority.BACKGROUND, new Vec2(0, 0), GameManager.getResolution().getWidth(), GameManager.getResolution().getHeight(), MeshManager.defaultMesh(), TextureManager.getTexture("mainmenubg.png"));
 		addEntity(background);
-		
-		addEntity(new Text("Meme World", "runescape", 100, 500, new Vec2(0, 0), Color.WHITE, false));
-		addUIEntity(new Text("Meme UI", "runescape", 50, 500, new Vec2(100, 100), Color.RED, false));
 	}
 
 	@Override

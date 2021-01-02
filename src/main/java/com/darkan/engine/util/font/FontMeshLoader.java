@@ -10,7 +10,7 @@ public class FontMeshLoader {
 
 	protected static final double LINE_HEIGHT = 0.03f;
 	protected static final int SPACE_ASCII = 32;
-	protected static final int FONT_SIZE = 50;
+	protected static final int FONT_SIZE = 16;
 
 	private MetaFile metaData;
 
@@ -20,7 +20,23 @@ public class FontMeshLoader {
 
 	protected Mesh create(Text text) {
 		List<Line> lines = createStructure(text);
-		Mesh data = createQuadVertices(text, lines);
+		double height = LINE_HEIGHT * FONT_SIZE * lines.size();
+		double maxWidth = text.getMaxLineLen();
+		if (text.isCentered()) {
+			maxWidth = 0;
+			for (Line line : lines) {
+				double lineWidth = 0;
+				for (Word word : line.getWords()) {
+					for (Character letter : word.getCharacters()) {
+						lineWidth += letter.getxAdvance() * FONT_SIZE;
+					}
+					lineWidth += metaData.getSpaceWidth() * FONT_SIZE;
+				}
+				if (lineWidth > maxWidth)
+					maxWidth = lineWidth;
+			}
+		}
+		Mesh data = createQuadVertices(text, lines, text.isCentered() ? (-maxWidth/2.0) : 0, height/2.0);
 		return data;
 	}
 
@@ -58,53 +74,52 @@ public class FontMeshLoader {
 		lines.add(currentLine);
 	}
 
-	private Mesh createQuadVertices(Text text, List<Line> lines) {
+	private Mesh createQuadVertices(Text text, List<Line> lines, double startX, double startY) {
 		text.setNumLines(lines.size());
-		double curserX = 0f;
-		double curserY = 0f;
+		double curserX = startX;
+		double curserY = startY;
 		List<Float> vertices = new ArrayList<Float>();
 		List<Float> textureCoords = new ArrayList<Float>();
 		for (Line line : lines) {
-			if (text.isCentered()) {
-				curserX = (line.getMaxLength() - line.getLineLength()) / 2;
-			}
 			for (Word word : line.getWords()) {
 				for (Character letter : word.getCharacters()) {
 					addVerticesForCharacter(curserX, curserY, letter, FONT_SIZE, vertices);
-					addTexCoords(textureCoords, letter.getxTextureCoord(), letter.getyTextureCoord(), letter.getXMaxTextureCoord(), letter.getYMaxTextureCoord());
+					addTexCoords(textureCoords, letter.getXTexCoord(), letter.getYTexCoord(), letter.getXMaxTexCoord(), letter.getYMaxTexCoord());
 					curserX += letter.getxAdvance() * FONT_SIZE;
 				}
 				curserX += metaData.getSpaceWidth() * FONT_SIZE;
 			}
-			curserX = 0;
+			curserX = startX;
 			curserY += LINE_HEIGHT * FONT_SIZE;
 		}
+		System.out.println(vertices);
 		return new Mesh(listToArray(vertices), listToArray(textureCoords));
 	}
 
 	private void addVerticesForCharacter(double curserX, double curserY, Character character, double fontSize, List<Float> vertices) {
-		double x = curserX + (character.getxOffset() * fontSize);
-		double y = curserY + (character.getyOffset() * fontSize);
+		double x = curserX + (character.getXOffset() * fontSize);
+		double y = curserY + (character.getYOffset() * fontSize);
 		double maxX = x + (character.getSizeX() * fontSize);
 		double maxY = y + (character.getSizeY() * fontSize);
-		double properX = (2 * x) - 1;
-		double properY = (-2 * y) + 1;
-		double properMaxX = (2 * maxX) - 1;
-		double properMaxY = (-2 * maxY) + 1;
-		addVertices(vertices, properX, properY, properMaxX, properMaxY);
+		addVertices(vertices, 2*x, -2*y+1, 2*maxX, -2*maxY+1);
 	}
 
 	private static void addVertices(List<Float> vertices, double x, double y, double maxX, double maxY) {
 		vertices.add((float) x);
 		vertices.add((float) y);
+		
 		vertices.add((float) x);
 		vertices.add((float) maxY);
+		
 		vertices.add((float) maxX);
 		vertices.add((float) maxY);
+		
 		vertices.add((float) maxX);
 		vertices.add((float) maxY);
+		
 		vertices.add((float) maxX);
 		vertices.add((float) y);
+		
 		vertices.add((float) x);
 		vertices.add((float) y);
 	}
