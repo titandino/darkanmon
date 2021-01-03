@@ -92,7 +92,6 @@ public class FontMeshLoader {
 			curserX = startX;
 			curserY += LINE_HEIGHT * FONT_SIZE;
 		}
-		System.out.println(vertices);
 		return new Mesh(listToArray(vertices), listToArray(textureCoords));
 	}
 
